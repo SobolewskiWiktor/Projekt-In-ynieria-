@@ -15,4 +15,4 @@ Do jej funkcjonalności nalerzą:
     -CSS 3 
     -Express lub php 
     -JS ES6 
-    ? C# MAUI
+    ?(C# MAUI)
