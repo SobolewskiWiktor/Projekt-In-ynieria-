@@ -1,1 +1,1 @@
-# Projekt-In-ynieria-
+# Projekt inżynieria oprogramowania
