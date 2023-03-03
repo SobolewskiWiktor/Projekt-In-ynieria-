@@ -28,4 +28,7 @@ Do jej funkcjonalności nalerzą:
     -CSS 3 
     -Express lub php 
     -JS ES6 
-    ?(C# MAUI)
+   
+```
+  - plik poczatkowy: login_screen.html
+```
