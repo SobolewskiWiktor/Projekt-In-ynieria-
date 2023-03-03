@@ -57,13 +57,21 @@
             </button>
           </form>
           
-          <script>
-            const loginButton = document.querySelector('.btn');
+      <script>
+        const loginButton = document.querySelector('.btn');
+        loginButton.addEventListener('click', function(event) {
+          const username = document.querySelector('input[name="username"]').value;
+          const password = document.querySelector('input[name="password"]').value;
         
-            loginButton.addEventListener('click', function() {
-                window.location.href = 'loading.html';
-            });
-        </script>
+          if (!username || !password) {
+            event.preventDefault();
+            alert('Please enter username and password');
+          } 
+          else {
+            window.location.href = 'loading.html';
+          }
+        });
+      </script>
           
     </body>
 </html>
