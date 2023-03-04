@@ -10,8 +10,39 @@
     
     <body>
      
-        
+        <div class="sidebar">
+            <div class="hamburger-menu__container">
+              <div class="hamburger-menu">
+                <div class="hamburger-menu__line"></div>
+                <div class="hamburger-menu__line"></div>
+                <div class="hamburger-menu__line"></div>
+              </div>
+            </div>
 
+            <nav class="nav">
+              <nav class="nav__item">
+                <i data-feather="user" class="nav__item-icon"></i>
+                <span class="nav__item-text">Account</span>
+              </nav>
+              <nav class="nav__item">
+                <i data-feather="bookmark" class="nav__item-icon"></i>
+                <span class="nav__item-text">Bookmarks</span>
+              </nav>
+              <nav class="nav__item">
+                <i data-feather="bar-chart-2" class="nav__item-icon"></i>
+                <span class="nav__item-text">Data history</span>
+              </nav>
+              <nav class="nav__item">
+                <i data-feather="arrow-down-circle" class="nav__item-icon"></i>
+                <span class="nav__item-text">Download</span>
+              </nav>
+            </nav>
+          </div>
 
+        <script src="../js/dashboard_user.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+        <script>
+            feather.replace();
+        </script>
     </body>
 </html>

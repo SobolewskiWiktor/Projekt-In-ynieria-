@@ -1,10 +1,272 @@
+:root{
+	--bgc: #141714;
+	--hamburger-green: #02CD0A;
+	--hamburger-dark-green: #009306;
+	background-color: var(--bgc);
+}
+
 body{
 	margin: 0;
 	padding: 0;
 	display: flex;
-	justify-content: center;
-	align-items: center;
 	min-height: 100vh;
 	font-family: 'Jost', sans-serif;
-	background: #141714;
+}
+
+.hamburger-menu__container {
+	--size: 60px;
+	background-color: var(--hamburger-green);
+	width: var(--size);
+	height: var(--size);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	cursor: pointer;
+}
+
+.hamburger-menu {
+	width: 50%;
+	position: relative;
+}
+
+.hamburger-menu__line {
+	background-color: var(--bgc);
+	height: 3px;
+	border-radius: 2px;
+}
+
+.hamburger-menu__line:first-child, 
+.hamburger-menu__line:last-child {
+	width: 100%;
+	position: absolute;
+}
+
+.hamburger-menu__container {
+	transition: all 0.2s ease-in;
+}
+  
+ .hamburger-menu__container:hover {
+	background-color: var(--hamburger-dark-green);
+ }
+  
+.hamburger-menu__line:first-child, 
+.hamburger-menu__line:last-child {
+	transition: all 0.1s ease-out;
+}
+  
+.hamburger-menu__line:not(:first-child):not(:last-child) {
+	animation-name: hamburger;
+	animation-duration: 0.15s;
+	animation-delay: 0.15s;
+	transform: scaleX(0);
+}
+  
+.hamburger-menu__line, 
+.hamburger-menu__line:first-child, .hamburger-menu__line:last-child {
+	animation-fill-mode: forwards;
+}
+  
+.hamburger-menu__line:first-child, .hamburger-menu__line:last-child {
+	transform-origin: 50%;
+	animation-duration: 0.3s;
+}
+  
+.hamburger-menu__line:first-child {
+	top: 0;
+	animation-name: hamburgerFirst;
+	transform: rotate(45deg);
+}
+  
+.hamburger-menu__line:last-child {
+	top: 0;
+	animation-name: hamburgerLast;
+	transform: rotate(-45deg);
+}
+  
+.hamburger-menu--open .hamburger-menu__line:not(:first-child):not(:last-child) {
+	animation-name: hamburgerOpen;
+	transform: scaleX(100%);
+}
+  
+.hamburger-menu--open .hamburger-menu__line:first-child {
+	top: -10px;
+	transform: rotate(0);
+	animation-name: hamburgerFirstOpen;
+}
+  
+.hamburger-menu--open .hamburger-menu__line:last-child {
+	top: 10px;
+	transform: rotate(0);
+	animation-name: hamburgerLastOpen;
+}
+  
+@keyframes hamburger {
+	0% {
+	  transform: scaleX(0);
+	}
+	100% {
+	  transform: scaleX(1);
+	}
+}
+  
+@keyframes hamburgerOpen {
+	0% {
+	  transform: scaleX(1);
+	}
+	100% {
+	  transform: scaleX(0);
+	}
+}
+  
+@keyframes hamburgerFirst {
+	0% {
+	  top: 0;
+	  transform: rotate(45deg);
+	}
+	50% {
+	  top: 0;
+	  transform: rotate(0);
+	}
+	100% {
+	  top: 10px;
+	  transform: rotate(0);
+	}
+}
+  
+@keyframes hamburgerLast {
+	0% {
+	  top: 0;
+	  transform: rotate(-45deg);
+	}
+	50% {
+	  top: 0;
+	  transform: rotate(0);
+	}
+	100% {
+	  top: -10px;
+	  transform: rotate(0);
+	}
+}
+  
+@keyframes hamburgerFirstOpen {
+	0% {
+	  top: 10px;
+	  transform: rotate(0);
+	}
+	50% {
+	  top: 0;
+	  transform: rotate(0);
+	}
+	100% {
+	  top: 0;
+	  transform: rotate(45deg);
+	}
+}
+  
+@keyframes hamburgerLastOpen {
+	0% {
+	  top: -12px;
+	  transform: rotate(0);
+	}
+	50% {
+	  top: 0;
+	  transform: rotate(0);
+	}
+	100% {
+	  top: 0;
+	  transform: rotate(-45deg);
+	}
+}
+
+.feather {
+	color: var(--bgc);
+	stroke-width: 2.5;
+	width: 26px;
+	height: 26px;
+}
+  
+.nav__item {
+	--size: 60px;
+	background-color: var(--hamburger-green);
+	width: var(--size);
+	height: var(--size);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	cursor: pointer;
+}
+  
+.nav__item {
+	top: 0;
+	position: absolute;
+	z-index: -1;
+}
+  
+.nav--open .nav__item:first-child {
+	top: 60px;
+	z-index: -1;
+}
+  
+.nav--open .nav__item:nth-child(2) {
+	top: calc(60px * 2);
+	z-index: -2;
+}
+  
+.nav--open .nav__item:nth-child(3) {
+	top: calc(60px * 3);
+	z-index: -3;
+}
+  
+.nav--open .nav__item:last-child {
+	top: calc(60px * 4);
+	z-index: -4;
+}
+  
+.nav__item-text {
+	color: var(--hamburger-green);
+	position: absolute;
+	font-weight: 600;
+	left: 105%;
+	opacity: 0;
+	font-size: 18px;
+	white-space: nowrap;
+}
+
+.nav__item {
+	transition: all 0.2s ease-in;
+}
+  
+.nav__item:hover {
+	background-color: var(--hamburger-dark-green);
+}
+  
+.nav__item {
+	transition-property: all;
+	transition-timing-function: ease-in-out;
+}
+
+.nav__item:hover .nav__item-text {
+	left: 120%;
+	opacity: 1;
+}
+  
+.nav--open .nav__item:first-child {
+	transition-duration: 0.15s;
+  
+}
+  
+.nav--open .nav__item:nth-child(2) {
+	transition-duration: 0.3s;
+}
+  
+.nav--open .nav__item:nth-child(3) {
+	transition-duration: 0.45s;
+}
+  
+.nav--open .nav__item:last-child {
+	transition-duration: 0.6s;
+}
+  
+.nav__item-text {
+	transition: all 0.3s ease-in-out;
 }
