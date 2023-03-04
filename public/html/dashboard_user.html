@@ -9,40 +9,31 @@
     </head>
     
     <body>
-     
-        <div class="sidebar">
-            <div class="hamburger-menu__container">
-              <div class="hamburger-menu">
-                <div class="hamburger-menu__line"></div>
-                <div class="hamburger-menu__line"></div>
-                <div class="hamburger-menu__line"></div>
-              </div>
-            </div>
+      <div class="sidebar">
+        <nav class="main-menu">
+          <ul>
+            <li>
+              <a href="/public/html/dashboard_user.html">
+              <i class="fa fa-home fa-2x"></i>
+              <span class="nav-text">Dashboard</span>
+              </a>
+            </li>
 
-            <nav class="nav">
-              <nav class="nav__item">
-                <i data-feather="user" class="nav__item-icon"></i>
-                <span class="nav__item-text">Account</span>
-              </nav>
-              <nav class="nav__item">
-                <i data-feather="bookmark" class="nav__item-icon"></i>
-                <span class="nav__item-text">Bookmarks</span>
-              </nav>
-              <nav class="nav__item">
-                <i data-feather="bar-chart-2" class="nav__item-icon"></i>
-                <span class="nav__item-text">Data history</span>
-              </nav>
-              <nav class="nav__item">
-                <i data-feather="arrow-down-circle" class="nav__item-icon"></i>
-                <span class="nav__item-text">Download</span>
-              </nav>
-            </nav>
-          </div>
 
-        <script src="../js/dashboard_user.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
-        <script>
-            feather.replace();
-        </script>
+          </ul>
+
+          <ul class="logout">
+            <li>
+              <a href="/public/html/login_screen.html">
+                <i class="fa fa-power-off fa-2x"></i>
+                <span class="nav-text">
+                  Logout
+                </span>
+              </a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+
     </body>
 </html>
