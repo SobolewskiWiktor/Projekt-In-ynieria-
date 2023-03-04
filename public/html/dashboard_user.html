@@ -9,31 +9,40 @@
     </head>
     
     <body>
+     
       <div class="sidebar">
-        <nav class="main-menu">
-          <ul>
-            <li>
-              <a href="/public/html/dashboard_user.html">
-              <i class="fa fa-home fa-2x"></i>
-              <span class="nav-text">Dashboard</span>
-              </a>
-            </li>
-
-
-          </ul>
-
-          <ul class="logout">
-            <li>
-              <a href="/public/html/login_screen.html">
-                <i class="fa fa-power-off fa-2x"></i>
-                <span class="nav-text">
-                  Logout
-                </span>
-              </a>
-            </li>
-          </ul>
+        <div class="hamburger-menu__container">
+          <div class="hamburger-menu">
+            <div class="hamburger-menu__line"></div>
+            <div class="hamburger-menu__line"></div>
+            <div class="hamburger-menu__line"></div>
+          </div>
+        </div>
+        <nav class="nav">
+          <nav class="nav__item">
+            <img src="../icons/world.svg" class="nav__item-icon"></i>
+            <a class="nav__item-text" href="dashboard_user.html">Dashboard</a>
+          </nav>
+          <nav class="nav__item">
+            <img src="" class="nav__item-icon"></i>
+            <a class="nav__item-text"> </a>
+          </nav>
+          <nav class="nav__item">
+            <img src="" class="nav__item-icon"></i>
+            <a class="nav__item-text"> </a>
+          </nav>
+          <nav class="nav__item">
+            <img src="" class="nav__item-icon"></i>
+            <a class="nav__item-text"> </a>
+          </nav>
+          <nav class="nav__item">
+            <img src="../icons/power.svg" class="nav__item-icon"></i>
+            <a class="nav__item-text" href="login_screen.html">Logout</a>
+          </nav>
         </nav>
       </div>
 
+        <script src="../js/dashboard_user.js"></script>
+        
     </body>
 </html>
