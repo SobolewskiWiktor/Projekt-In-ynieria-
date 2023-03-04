@@ -27,8 +27,4 @@ Do jej funkcjonalności nalerzą:
     -HTML 5 
     -CSS 3 
     -Express lub php 
-    -JS ES6 
-   
-```
-  - plik poczatkowy: login_screen.html
-```
+    -JS ES6
