@@ -23,8 +23,10 @@ Do jej funkcjonalności nalerzą:
 
   
   Stack technologiczny 
-    -SQL (MariaDB) 
+  ```
+    -SQL 
     -HTML 5 
     -CSS 3 
     -Express lub php 
     -JS ES6
+```
