@@ -12,6 +12,9 @@ app.get('/', (req,res) => {
 app.get('/dashboard_user.html', (req,res) => {
     res.sendFile(__dirname + '/public/html/dashboard_user.html')
 });
+app.get('/dashboard_admin.html', (req,res) => {
+    res.sendFile(__dirname + '/public/html/dashboard_admin.html')
+});
 
 
 app.post('/login', async (req,res)=> {
