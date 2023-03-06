@@ -42,16 +42,21 @@ app.post('/login', async (req,res)=> {
                  else
                  { 
                    if(result[0].haslo == userpass && result[0].login == userlogin )
-                     { 
-                       console.log('loggin accepted')
-                       //split here login between user and admin
-                       //take data from db which will include char type for example 
-                       //A-admin  U-user
-                       res.redirect('/dashboard_user.html')
-                     }
-                 }
-                 
-                   })
+                    { 
+                      console.log('loggin accepted')
+                      res.redirect('/loading.html')
+                      setTimeout(function(){
+                        //split here login between user and admin
+                        //take data from db which will include char type for example 
+                        //A-admin  U-user
+                         
+                        res.redirect('/dashboard_user.html')
+                        res.redirect('/dashboard_admin.html')
+
+                      }, 2500);
+                    }
+                 }  
+              })
              });
             }
          }
