@@ -44,6 +44,9 @@ app.post('/login', async (req,res)=> {
                    if(result[0].haslo == userpass && result[0].login == userlogin )
                      { 
                        console.log('loggin accepted')
+                       //split here login between user and admin
+                       //take data from db which will include char type for example 
+                       //A-admin  U-user
                        res.redirect('/dashboard_user.html')
                      }
                  }
