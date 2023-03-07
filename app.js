@@ -15,6 +15,9 @@ app.get('/dashboard_user.html', (req,res) => {
 app.get('/dashboard_admin.html', (req,res) => {
     res.sendFile(__dirname + '/public/html/dashboard_admin.html')
 });
+app.get('/loading', (req,res)=> {
+  res.sendFile(__dirname + '/public/html/loading.html')
+});
 
 
 app.post('/login', async (req,res)=> {
@@ -44,16 +47,7 @@ app.post('/login', async (req,res)=> {
                    if(result[0].haslo == userpass && result[0].login == userlogin )
                     { 
                       console.log('loggin accepted')
-                      res.redirect('/loading.html')
-                      setTimeout(function(){
-                        //split here login between user and admin
-                        //take data from db which will include char type for example 
-                        //A-admin  U-user
-                         
-                        res.redirect('/dashboard_user.html')
-                        res.redirect('/dashboard_admin.html')
-
-                      }, 2500);
+                      res.redirect('/loading')
                     }
                  }  
               })
