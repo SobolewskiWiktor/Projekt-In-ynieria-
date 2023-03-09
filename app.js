@@ -1,17 +1,18 @@
 const express = require('express');
 const log = require('./database.js');
-const port = 80
+const PORT = 80
 
 const app = express();
 app.use(express.static(__dirname + '/public'));
-app.use(express.urlencoded({extended: false}))
+app.use(express.urlencoded({ extended: true }))
+app.use(express.json())
 
 app.get('/', (req,res) => {
     res.sendFile(__dirname + '/public/html/login_screen.html')
 });
 app.get('/dashboard_user.html', (req,res) => {
     res.sendFile(__dirname + '/public/html/dashboard_user.html')
-});
+})
 app.get('/dashboard_admin.html', (req,res) => {
     res.sendFile(__dirname + '/public/html/dashboard_admin.html')
 });
@@ -57,4 +58,6 @@ app.post('/login', async (req,res)=> {
     login(userLogin, userPassword);
 });
 
-app.listen(port); 
+app.listen(PORT, () => {
+  console.log(`My app is running on htts://localhost:${PORT}`);
+}); 
