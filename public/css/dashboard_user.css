@@ -1,7 +1,7 @@
 :root{
 	--bgc: #141714;
-	--hamburger-green: #02CD0A;
-	--hamburger-dark-green: #009306;
+	--green: #02CD0A;
+	--dark_green: #009306;
 	background-color: var(--bgc);
 }
 
@@ -53,21 +53,21 @@ li
 }
 .option:hover
 {
-	color: #02CD0A;
+	color: var(--green);
 	cursor: pointer;
-	fill: #02CD0A;
+	fill: var(--green);
 }
 #bar
 {
 	margin-top: 10px;
-	background-color: #02CD0A;
+	background-color: var(--green);
 	width: 20px;
 	height: 1px;
 }
 #bar2
 {
 	margin-top: 3px;
-	background-color: #02CD0A;
+	background-color: var(--green);
 	width: 20px;
 	height: 1px;
 }
@@ -137,6 +137,6 @@ li
 }
 #taskButton:hover
 {
-	color: #02CD0A;
+	color: var(--green);
 	cursor: pointer;
 }
