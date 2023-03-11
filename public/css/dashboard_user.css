@@ -37,7 +37,6 @@ li
 {
 	text-decoration: none;
 	list-style: none;
-	letter-spacing: 3px;
 }
 .option
 {
@@ -48,7 +47,7 @@ li
 	flex-direction: column;
 	text-decoration: none;
     margin-left: 20px;
-	letter-spacing: 10px;
+	letter-spacing: 2px;
     transition-duration: 500ms;
 	padding: 10px;
 }
