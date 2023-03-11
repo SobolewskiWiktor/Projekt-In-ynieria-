@@ -12,8 +12,7 @@ body{
 }
 
 /* desktop */
-#main
-{
+#main{
 	width: 100%;
 	height: auto;
 	display: flex;
@@ -21,25 +20,20 @@ body{
 	align-items: center;
 	flex-direction: column;
 }
-#menu
-{
+
+#menu{
 	display: flex;
 	justify-content: row;
 }
-#top 
-{
+
+#top{
 	margin-top: 20px;
 	display: flex;
 	width: 100%;
 	justify-content: center;
 }
-li
-{
-	text-decoration: none;
-	list-style: none;
-}
-.option
-{
+
+.option{
 	color: white;
 	font-size: 20px;
 	display: flex;
@@ -47,96 +41,69 @@ li
 	flex-direction: column;
 	text-decoration: none;
     margin-left: 20px;
-	letter-spacing: 2px;
+	letter-spacing: 10px;
     transition-duration: 700ms;
 	padding: 10px;
+	position: relative;
 }
-.option:hover
-{
+
+li, a{
+	text-decoration: none;
+	color: white;
+	transition-duration: 500ms;
+	list-style: none;
+	letter-spacing: 3px;
+}
+
+.dropdown{
+	background-color: var(--bgc);
+	padding: 1em 0;
+	position: absolute;
+	display: none;
+	border-radius: 8px;
+	top: 35px;
+}
+
+.dropdown li + li{
+	margin-top: 10px;
+}
+
+.dropdown li{
+	padding: 0.5em 1em;
+	width: 8em;
+	text-align: left;
+}	
+
+.dropdown li:hover{
+	background-color: var(--bgc);
+}
+
+.option:hover .dropdown{
+	display: block;
+}
+
+a:hover{
 	color: var(--green);
 	cursor: pointer;
 	fill: var(--green);
 }
-#bar
-{
-	margin-top: 10px;
-	background-color: var(--green);
-	width: 20px;
-	height: 1px;
-}
-#bar2
-{
-	margin-top: 3px;
-	background-color: var(--green);
-	width: 20px;
-	height: 1px;
-}
 
-#rest
-{
-	margin-top: 50px;
-	width: 100%;
-	height: auto;
-	display: flex;
-	justify-content: center;
-	flex-direction: row;
-}
-
-#left, #middle, #right
-{
-	display: flex;
-	flex-direction: column;
-	width: 400px;
-	height: 800px;
-	border: 1px solid white;
-	margin-left: 20px;
-	border-radius: 15px;
-}
-#taskTop
-{
-	margin-top: 10px;
-	color: white;
-	letter-spacing: 5px;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	height: 30px;
-	width: 100%;
-	font-size: 30px;
-}
-#tasks
-{
-	margin-top:50px ;
-	width: 100%;
-	height: auto;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-}
-#task
-{
-	display: flex;
-	flex-direction: row;
-	align-items: center;
-	justify-content: space-around;
-	width: 350px;
-	height: 80px;
-	border: 1px solid white;
-	border-radius: 10px;
-}
-#taskText
-{
-	margin-left: 10px;
-	color: white;
-}
-#taskButton
-{
-	color: white;
-    letter-spacing: 2px;
-	transition-duration: 300ms;
-}
-#taskButton:hover
-{
+.option:hover{
 	color: var(--green);
 	cursor: pointer;
+	fill: var(--green);
+}
+
+#bar{
+	margin-top: 10px;
+	background-color: var(--green);
+	width: 20px;
+	height: 1px;
+}
+
+#bar2{
+	margin-top: 10px;
+	background-color: var(--green);
+	width: 100%;
+	height: 1px;
 }
