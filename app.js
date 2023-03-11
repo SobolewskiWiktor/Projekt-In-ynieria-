@@ -1,6 +1,7 @@
 // Importing modules
 const express = require("express");
 const log = require("./database.js");
+const TASKS = require("./public/js/tasks")
 // Variables
 const PORT = 80;
 
@@ -11,13 +12,18 @@ const app = express();
 app.use(express.static(__dirname + "/public"));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.set('view engine', 'ejs');
 
 // Routing
 app.get("/", (req, res) => {
   res.sendFile(__dirname + "/public/html/login_screen.html");
 });
 app.get("/dashboard_user.html", (req, res) => {
-  res.sendFile(__dirname + "/public/html/dashboard_user.html");
+  const viewsTasks = {
+   tasks: TASKS.tasks
+  }
+  //res.sendFile(__dirname + "/public/html/dashboard_user.html");
+  res.render('dashboard_user', viewsTasks)
 });
 app.get("/dashboard_admin.html", (req, res) => {
   res.sendFile(__dirname + "/public/html/dashboard_admin.html");
@@ -40,9 +46,6 @@ app.post("/login", async (req, res) => {
     let userpass = userPassword;
 
     if (userlogin != "" && userpass != "") {
-      log.connect(function (err) {
-        if (err) throw err;
-        console.log("Connected!");
         log.query(
           `select * from logins where login = ? and haslo = ?`,
           [userlogin, userpass],
@@ -57,7 +60,6 @@ app.post("/login", async (req, res) => {
             }
           }
         );
-      });
     }
   };
   login(userLogin, userPassword);

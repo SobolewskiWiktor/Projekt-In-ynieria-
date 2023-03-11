@@ -21,11 +21,19 @@
         <div id="left">
           <div id="taskTop">To Do</div>
           <div id="tasks">
+            <% if(tasks.length) { %>
              <div id="task">
               <div id="taskText">Task ONE</div>
               <div id="taskButton"><a>Details</a>
                 <div id="bar2"></div></div>
              </div>
+             <%} else {%>
+              <div id="task">
+                <div id="taskText">BRAK</div>
+                <div id="taskButton"><a>Details</a>
+                  <div id="bar2"></div></div>
+               </div>
+              <% }%>
           </div>
         </div>
         <div id="middle">
