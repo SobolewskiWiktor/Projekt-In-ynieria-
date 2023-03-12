@@ -12,6 +12,14 @@ body{
 }
 
 /* desktop */
+li, a{
+	text-decoration: none;
+	color: white;
+	transition-duration: 500ms;
+	list-style: none;
+	font-size: 15px;
+	letter-spacing: 3px;
+}
 #main
 {
 	width: 100%;
@@ -87,7 +95,6 @@ li
 	display: flex;
 	flex-direction: column;
 	width: 400px;
-	height: 800px;
 	border: 1px solid white;
 	margin-left: 20px;
 	border-radius: 15px;
@@ -107,13 +114,13 @@ li
 #tasks
 {
 	margin-top:50px ;
+	margin-bottom: 50px;
 	width: 100%;
 	height: auto;
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	flex-direction: column;
-	margin-top: 20px;
+  flex-direction:column;
 }
 #task
 {
@@ -125,6 +132,7 @@ li
 	height: 80px;
 	border: 1px solid white;
 	border-radius: 10px;
+  margin-top:20px
 }
 #taskText
 {

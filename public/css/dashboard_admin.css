@@ -8,7 +8,7 @@
 body{
 	margin: 0;
 	padding: 0;
-	font-family: 'Jost', sans-serif;
+	font-family: 'Poppins', sans-serif;
 }
 
 /* desktop */
@@ -52,6 +52,8 @@ li, a{
 	color: white;
 	transition-duration: 500ms;
 	list-style: none;
+	font-size: 15px;
+	letter-spacing: 3px;
 }
 
 .dropdown{
@@ -61,7 +63,7 @@ li, a{
 	display: none;
 	border: 1px solid white;
 	border-radius: 8px;
-	top: 35px;
+	top: 15px;
 	z-index: 100;
 }
 
@@ -96,6 +98,7 @@ a:hover{
 }
 
 #bar{
+	margin-left: 10px;
 	margin-top: 10px;
 	background-color: var(--green);
 	width: 20px;
@@ -111,15 +114,12 @@ a:hover{
 
 .container{
 	display: flex;
-	flex-direction: column;
-	width: auto;
-	height: 800px;
-	border: 1px solid white;
-	margin-left: 20px;
-	margin-right: 20px;
-	border-radius: 15px;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
 }
-
 .space{
 	display: flex;
 	flex-direction: column;
@@ -263,4 +263,61 @@ a:hover{
   }
   .credits a:hover {
 	opacity: 1;
+  }
+
+  #user
+  {
+	margin-left: 10px;
+	margin-top: 10px;
+	width: 300px;
+	height: 70px;
+	border: 1px solid whitesmoke;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	border-radius: 10px;
+  }
+  #left
+  {
+	width: 20%;
+	height: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+  }
+  #avatar
+  {
+	width: 40px;
+	height: 40px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	border-radius: 100%;
+	background-color: tomato;
+	color: white;
+  }
+  #right
+  {
+	width: 80%;
+	height: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: row;
+  }
+  #data
+  {
+	width: 80%;
+	height: 100%;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	flex-direction: row;
+	color: white;
+  }
+  li
+  {
+	width: auto;
+	height: 15px;
   }

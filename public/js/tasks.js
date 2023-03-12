@@ -50,7 +50,7 @@ function refresh () {
       {
         result.forEach((elem, index, arr) => {
           tasks[index] = elem.nazwa
-          status[index] = elem.wykonanie
+          status[index] = elem.status
           desc[index] = elem.opis
         }
         )
@@ -59,9 +59,9 @@ function refresh () {
   )
 };
 
-function add (name, status, desc)
+function add (name, targetDate, desc, user)
 {
-  DB.query(`INSERT INTO TASKS (nazwa,status,opis) VALUES ${name},${status},${desc}`)
+  DB.query(`INSERT INTO tasks (nazwa, opis, data_zak, wykonanie, user) VALUES ('${name}','${desc}','${targetDate}','DO','${user}')`)
 }
 
 function deleteTask (name,status)
@@ -74,6 +74,9 @@ function deleteTask (name,status)
 module.exports={
     tasks,
     status,
-    desc
+    desc,
+    add,
+    deleteTask,
+    refresh
 
 }
