@@ -20,27 +20,48 @@
       <div id="rest">
         <div id="left">
           <div id="taskTop">To Do</div>
+          <%console.log(tasks)%>
+          <%console.log(status)%>
+          <%console.log(description)%>
           <div id="tasks">
-            <% if(tasks.length) { %>
-             <div id="task">
-              <div id="taskText">Task ONE</div>
+            <% tasks.forEach((elem, index, arr) => {  %>
+              <%if(status[index] == "DO") {%>
+            <div id="task">
+              <div id="taskText"><%-elem%></div>
               <div id="taskButton"><a>Details</a>
                 <div id="bar2"></div></div>
              </div>
-             <%} else {%>
-              <div id="task">
-                <div id="taskText">BRAK</div>
-                <div id="taskButton"><a>Details</a>
-                  <div id="bar2"></div></div>
-               </div>
-              <% }%>
+             <%}%>
+             <%})%>
           </div>
         </div>
         <div id="middle">
           <div id="taskTop">In Progress</div>
+          <div id="tasks">
+            <% tasks.forEach((elem, index, arr) => {  %>
+              <%if(status[index] == "INP") {%>
+            <div id="task">
+              <div id="taskText"><%-elem%></div>
+              <div id="taskButton"><a>Details</a>
+                <div id="bar2"></div></div>
+             </div>
+             <%}%>
+             <%})%>
+          </div>
         </div>
         <div id="right">
           <div id="taskTop">Done</div>
+          <div id="tasks">
+            <% tasks.forEach((elem, index, arr) => {  %>
+              <%if(status[index] == "DONE") {%>
+            <div id="task">
+              <div id="taskText"><%-elem%></div>
+              <div id="taskButton"><a>Details</a>
+                <div id="bar2"></div></div>
+             </div>
+             <%}%>
+             <%})%>
+          </div>
         </div>
       </div>
      </div>

@@ -20,7 +20,9 @@ app.get("/", (req, res) => {
 });
 app.get("/dashboard_user.html", (req, res) => {
   const viewsTasks = {
-   tasks: TASKS.tasks
+   tasks: TASKS.tasks,
+   status: TASKS.status,
+   description: TASKS.desc
   }
   //res.sendFile(__dirname + "/public/html/dashboard_user.html");
   res.render('dashboard_user', viewsTasks)
