@@ -1,60 +1,61 @@
 <!DOCTYPE html>
-    <head>
-        <title> Main Page  </title>
-        <meta charset="UTF-8" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <link href="https://fonts.googleapis.com/css2?family=Jost:wght@500&display=swap" rel="stylesheet">  
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300&display=swap" rel="stylesheet"> 
-        <link rel="stylesheet" type="text/css" href="../css/dashboard_admin.css" />  
-    </head>
-    
-    <body>
-        <%Ref()%>
-      <div id="content">
-        <div id="top">
-          <nav id="menu">
 
-            <li class="option">
-              <a href="/dashboard_admin.html">Users</a>
-              <div id="bar"></div>
-              <ul class="dropdown">
-                <li><a href="/adminAddUser">add user</a></li>
-                <div id="bar"></div>
-                <li><a href="#">delete user</a></li>
-                <div id="bar"></div>
-                <li><a href="#">edit users</a></li>
-                <div id="bar"></div>
-              </ul>
-            </li>
+<head>
+  <title> Main Page </title>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://fonts.googleapis.com/css2?family=Jost:wght@500&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300&display=swap" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="../css/dashboard_admin.css" />
+</head>
 
-            <li class="option">
-              <a href="/dashboard_admin.html">Tasks</a> 
-              <div id="bar"></div>
-              <ul class="dropdown">
-                <li><a href="/addTask">add Task</a></li>
-                <div id="bar"></div>
-                <li><a href="/showTask">show Tasks</a></li>
-                <div id="bar"></div>
-                <li><a href="#">edit Tasks</a></li>
-                <div id="bar"></div>
-              </ul>
-            </li>
+<body>
+  <%Ref()%>
+    <div id="content">
+      <div id="top">
+        <nav id="menu">
 
-            <li class="option">
-              <a href="/dashboard_admin.html">Home</a>
+          <li class="option">
+            <a href="/dashboard_admin.html">Users</a>
+            <div id="bar"></div>
+            <ul class="dropdown">
+              <li><a href="/adminAddUser">add user</a></li>
               <div id="bar"></div>
-            </li>
-          </nav>
-        </div>
+              <li><a href="#">delete user</a></li>
+              <div id="bar"></div>
+              <li><a href="#">edit users</a></li>
+              <div id="bar"></div>
+            </ul>
+          </li>
+
+          <li class="option">
+            <a href="/dashboard_admin.html">Tasks</a>
+            <div id="bar"></div>
+            <ul class="dropdown">
+              <li><a href="/addTask">add Task</a></li>
+              <div id="bar"></div>
+              <li><a href="/showTask">show Tasks</a></li>
+              <div id="bar"></div>
+              <li><a href="#">edit Tasks</a></li>
+              <div id="bar"></div>
+            </ul>
+          </li>
+
+          <li class="option">
+            <a href="/dashboard_admin.html">Home</a>
+            <div id="bar"></div>
+          </li>
+        </nav>
       </div>
+    </div>
 
-      <div class="container">
-        <%console.log(Name); %>
-        <%Name.forEach((elem, index, arr) => {%>
-          <% const nick = elem[0][0] + Surname[index][0]%>
+    <div class="container">
+      <%console.log(Name); %>
+        <%Name.forEach((elem, index, arr)=> {%>
+          <% const nick=elem[0][0] + Surname[index][0]%>
             <div id="user">
               <div id="left">
                 <div id="avatar"><%- nick %></div>
@@ -62,13 +63,14 @@
               <div id="right">
                 <div id="data">
                   <%- Name[index] %>
-                  <%- Surname[index] %>
+                    <%- Surname[index] %>
                 </div>
               </div>
             </div>
-        <%});%>
-        <div id="test"></div>
+            <%});%>
+              <div id="test"></div>
 
-      </div>
-    </body>
+    </div>
+</body>
+
 </html>

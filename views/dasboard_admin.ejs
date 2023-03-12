@@ -1,57 +1,59 @@
 <!DOCTYPE html>
-    <head>
-        <title> Main Page  </title>
-        <meta charset="UTF-8" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <link href="https://fonts.googleapis.com/css2?family=Jost:wght@500&display=swap" rel="stylesheet">  
-        <link rel="stylesheet" type="text/css" href="../css/dashboard_admin.css" />  
-    </head>
-    
-    <body>
-        <%Ref()%>
-      <div id="content">
-        <div id="top">
-          <nav id="menu">
 
-            <li class="option">Users
-              <div id="bar"></div>
-              <ul class="dropdown">
-                <li><a href="#">all users</a></li>
-                <div id="bar"></div>
-                <li><a href="/adminAddUser">add user</a></li>
-                <li><a href="#">delete user</a></li>
-                <div id="bar"></div>
-                <li><a href="#">edit users</a></li>
-              </ul>
-            </li>
+<head>
+  <title> Main Page </title>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://fonts.googleapis.com/css2?family=Jost:wght@500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="../css/dashboard_admin.css" />
+</head>
 
-            <li class="option">Tasks 
-              <div id="bar"></div>
-            </li>
+<body>
+  <%Ref()%>
+    <div id="content">
+      <div id="top">
+        <nav id="menu">
 
-            <li class="option">
-              <a href="/dashboard_admin.html">Home</a>
+          <li class="option">Users
+            <div id="bar"></div>
+            <ul class="dropdown">
+              <li><a href="#">all users</a></li>
               <div id="bar"></div>
-            </li>
-            
-            <li class="option">Contact 
+              <li><a href="/adminAddUser">add user</a></li>
+              <li><a href="#">delete user</a></li>
               <div id="bar"></div>
-            </li>
-            
-            <li class="option">Works 
-              <div id="bar"></div>
-            </li>
-          </nav>
-        </div>
+              <li><a href="#">edit users</a></li>
+            </ul>
+          </li>
+
+          <li class="option">Tasks
+            <div id="bar"></div>
+          </li>
+
+          <li class="option">
+            <a href="/dashboard_admin.html">Home</a>
+            <div id="bar"></div>
+          </li>
+
+          <li class="option">Contact
+            <div id="bar"></div>
+          </li>
+
+          <li class="option">Works
+            <div id="bar"></div>
+          </li>
+        </nav>
       </div>
+    </div>
 
-      <div class="container">
-        <%Name.forEach((elem, index, arr) => {%>
-            <h1><%- elem.imie%></h1>
-            <%});%>
-        <div id="test"></div>
+    <div class="container">
+      <%Name.forEach((elem, index, arr)=> {%>
+        <h1><%- elem.imie%></h1>
+        <%});%>
+          <div id="test"></div>
 
-      </div>
-    </body>
+    </div>
+</body>
+
 </html>

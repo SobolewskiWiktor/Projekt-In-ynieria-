@@ -1,33 +1,35 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title> Loading...  </title>
-        <meta charset="UTF-8" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <link href="https://fonts.googleapis.com/css2?family=Jost:wght@500&display=swap" rel="stylesheet">
-        <link rel="stylesheet" type="text/css" href="../css/loading.css" />
-    </head>
 
-    <body>
+<head>
+    <title> Loading... </title>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="https://fonts.googleapis.com/css2?family=Jost:wght@500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="../css/loading.css" />
+</head>
 
-        <div class="loading">
-            <div class="bar bar1"></div>
-            <div class="bar bar2"></div>
-            <div class="bar bar3"></div>
-            <div class="bar bar4"></div>
-            <div class="bar bar5"></div>
-            <div class="bar bar6"></div>
-            <div class="bar bar7"></div>
-            <div class="bar bar8"></div>
-        </div>
-        <% setTimeout(function(){ %>
-        <%    console.log(rola); %>
-        <%    if(rola == "Admin") { console.log("Kieruje na admina")%>
-            <% render('dashboard_admin') %>
-        <%    }else {%>
-            <script> document.location.href = 'dashboard_user.html' </script>
-        <%    }%>
-        <%  }, 2500);%>
-    </body>
+<body>
+
+    <div class="loading">
+        <div class="bar bar1"></div>
+        <div class="bar bar2"></div>
+        <div class="bar bar3"></div>
+        <div class="bar bar4"></div>
+        <div class="bar bar5"></div>
+        <div class="bar bar6"></div>
+        <div class="bar bar7"></div>
+        <div class="bar bar8"></div>
+    </div>
+    <% setTimeout(function(){ %>
+        <% console.log(rola); %>
+            <% if(rola=="Admin" ) { console.log("Kieruje na admina")%>
+                <% render('dashboard_admin') %>
+                    <% }else {%>
+                        <script> document.location.href = 'dashboard_user.html' </script>
+                        <% }%>
+                            <% }, 2500);%>
+</body>
+
 </html>
