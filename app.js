@@ -120,9 +120,7 @@ app.post("/addUser", async (req, res) => {
   USER.refreshGet();
   res.redirect("/loading_adm");
 });
-app.listen(PORT, () => {
-  console.log(`My app is running on htts://localhost:${PORT}`);
-});
+
 
 app.post("/addTask", async (req, res) => {
   const Name = req.body.name;
@@ -133,4 +131,18 @@ app.post("/addTask", async (req, res) => {
   TASKS.add(Name, TargetDate, Desc, User);
   TASKS.refresh();
   res.redirect("/loading_adm");
+});
+
+app.post("/taskDetail", async(req,res)=> {
+  const viewsTasks = {
+    tasks: TASKS.tasks,
+    status: TASKS.status,
+    description: TASKS.desc,
+    witch: req.body.taskname,
+  };
+  res.render("taskDetail", viewsTasks);
+});
+
+app.listen(PORT, () => {
+  console.log(`My app is running on htts://localhost:${PORT}`);
 });

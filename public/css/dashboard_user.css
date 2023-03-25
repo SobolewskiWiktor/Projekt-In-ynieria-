@@ -144,6 +144,8 @@ li
 	color: white;
     letter-spacing: 2px;
 	transition-duration: 300ms;
+	background-color: transparent;
+    border: 0px;
 }
 #taskButton:hover
 {
