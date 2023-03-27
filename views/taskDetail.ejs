@@ -8,8 +8,8 @@
   <link href="https://fonts.googleapis.com/css2?family=Jost:wght@500&display=swap" rel="stylesheet">
   <link rel="stylesheet" type="text/css" href="../css/taskDetail.css" />
 </head>
-<% refresh()%>
 <body>
+  <% refresh() %>
   <div id="conent">
     <div id="top">
       <nav id="menu">
@@ -23,11 +23,29 @@
               <div id="team">
                 <div id="teamTop">Task Team</div>
                 <div id="teamPersons">
-                  <%for(let i=0; i<teamUser.length; i++){%>
+                  <%for(let i=0; i<=teamUser.length; i++){%>
                     <%if(teamTask[i] == witch){%>
-                      <div id="person"><%-teamUser[i]%></div>
+                      <div id="person">
+                        <div id="name"><%-teamUser[i]%></div>
+                        <form action="/deleteteammate" method="POST">
+                          <input type="hidden" name="nick" value="<%-teamUser[i]%>" id="nick"></input>
+                          <input type="hidden" name="task" value="<%-elem%>" id="nick"></input>
+                          <button id="delete" type="submit">X</button>
+                        </form>
+                      </div>
+                      <%console.log(teamUser)%>
+                      <%console.log(teamTask)%>
                     <%}%>
                   <%}%>
+                </div>
+                <div id="add">
+                  <form action="/addteammate" method="POST">
+                    <div id="add">
+                       <input type="text" name="nick" placeholder="Login" id="nick"></input>
+                       <input type="hidden" name="task" value="<%-elem%>" id="nick"></input>
+                       <button id="ADD" type="submit">ADD</button>
+                    </div>
+                  </form>
                 </div>
               </div>
             </div>

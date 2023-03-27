@@ -147,6 +147,36 @@ app.post("/taskDetail", async(req,res)=> {
   res.render("taskDetail", viewsTasks);
 });
 
+app.post("/addteammate", async(req,res)=>
+{
+  const user = req.body.nick;
+  const task = req.body.task;
+  TEAM.AddTeam(user,task);
+  TEAM.refreshGet(); 
+  const viewsTasksAdm = {
+    tasks: TASKS.tasks,
+    status: TASKS.status,
+    description: TASKS.desc,
+  };
+  res.render("showTask", viewsTasksAdm);
+
+});
+app.post("/deleteteammate", async(req,res)=>
+{
+  const user = req.body.nick;
+  const task = req.body.task;
+  TEAM.DeleteTeam(user,task); 
+  TEAM.celarTables(); 
+  TEAM.refreshGet();
+  const viewsTasksAdm = {
+    tasks: TASKS.tasks,
+    status: TASKS.status,
+    description: TASKS.desc,
+  };
+  res.render("showTask", viewsTasksAdm);
+
+});
+
 app.listen(PORT, () => {
   console.log(`My app is running on htts://localhost:${PORT}`);
 });
