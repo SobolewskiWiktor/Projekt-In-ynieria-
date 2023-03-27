@@ -3,6 +3,7 @@ const express = require("express");
 const log = require("./database.js");
 const TASKS = require("./public/js/tasks");
 const USER = require("./public/js/user");
+const TEAM = require("./public/js/team");
 // Variables
 const PORT = 80;
 let role = "";
@@ -139,6 +140,9 @@ app.post("/taskDetail", async(req,res)=> {
     status: TASKS.status,
     description: TASKS.desc,
     witch: req.body.taskname,
+    teamUser: TEAM.userName,
+    teamTask: TEAM.taskName,
+    refresh: TEAM.refreshGet,
   };
   res.render("taskDetail", viewsTasks);
 });
