@@ -95,7 +95,7 @@ li
 {
 	text-align: center;
     flex-direction: column;
-	overflow-wrap: break-word;
+	word-break: break-all;
     color: white;
 	width: 375px;
 }
