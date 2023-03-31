@@ -103,9 +103,13 @@ li
     margin-right: 5px;
     display: flex;
     width: 375px;
-    height: 400px;
+    height: 50vh;
     border: 1px solid white;
     border-radius: 15px;
+}
+.left .bottom
+{
+    height: 31.5vh;
 }
 
 .right
@@ -152,4 +156,9 @@ li
 .subtask_checkbox
 {
     color: white;
+}
+
+.left .bottom:hover{
+    border: 3px solid yellow;
+    transition: 200ms;
 }
