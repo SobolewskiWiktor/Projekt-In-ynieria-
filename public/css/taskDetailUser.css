@@ -157,8 +157,3 @@ li
 {
     color: white;
 }
-
-.left .bottom:hover{
-    border: 3px solid yellow;
-    transition: 200ms;
-}
