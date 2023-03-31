@@ -110,6 +110,11 @@ li
     border: 1px solid white;
     border-radius: 15px;
 }
+.left .top .desc
+{
+	margin-left: 10px;
+    margin-right: 10px;
+}
 .left .bottom
 {
     height: 31.5vh;
