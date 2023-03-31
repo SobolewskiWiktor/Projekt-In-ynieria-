@@ -58,8 +58,8 @@
                       <%assigments.forEach((elem,index,arr) => {%>
                         <%if (elem.task == witch) {%>
                             <div id="subtask">
-                                <input checked="checked" type="radio" id="subtaskInput" name="<%elem.nazwa%>" value="<%elem.nazwa%>">
-                                <label for="subtaskInput"> <%-elem.nazwa%></label>
+                                <input type="checkbox" id="<%-elem.nazwa%>" name="<%elem.nazwa%>" value="<%elem.nazwa%>">
+                                <label for="<%-elem.nazwa%>"> <%-elem.nazwa%></label>
                             </div>
                           <%}%>
                         <%})%>

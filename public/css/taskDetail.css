@@ -216,6 +216,9 @@ li
 }
 #subtaskContent
 {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
 	width: 100%;
 	height: 80%;
 }
@@ -227,21 +230,22 @@ li
 	justify-content: center;
 	align-items: center;
 }
-#subtaskInput
+#subtask input
 {
   width: 20px;
   height: 20px;
   background-color: transparent;
   border: 1px solid white;
+  border-radius: round;
   transition-duration: 300ms;
 }
-#subtaskInput:hover
+#subtask input:hover
 {
 	background-color: grey;
     border: 1px solid rgba(255, 255, 255, 0.259);
 	cursor: pointer;
 }
-#subtaskInput:checked
+#subtask input:checked
 {
   background-color: var(--green);
   border: 1px solid darkgreen;
