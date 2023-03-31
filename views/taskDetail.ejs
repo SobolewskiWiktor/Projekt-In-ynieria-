@@ -51,7 +51,32 @@
             </div>
             <div id="right">
               <div id="rightTop">Nazwa:<%-elem%></div>
-              <div id="rightMiddle"><%-description[index]%></div>
+              <div id="rightMiddle">
+                <div id="subtasks">
+                  <form method="POST" action="/modifyAssignment" id="AssigmentsForm">
+                    <div id="subtaskContent">
+                      <%assigments.forEach((elem,index,arr) => {%>
+                        <%if (elem.task == witch) {%>
+                            <div id="subtask">
+                                <input checked="checked" type="radio" id="subtaskInput" name="<%elem.nazwa%>" value="<%elem.nazwa%>">
+                                <label for="subtaskInput"> <%-elem.nazwa%></label>
+                            </div>
+                          <%}%>
+                        <%})%>
+                    </div>
+                    <div id="subtaskButton">
+                      <button id="ADD" type="submit">SUBBMIT</button>
+                    </div>
+                  </form>
+                </div>
+                <div id="addSubtask">
+                  <form action="/addAssignments" method="POST">
+                    <input type="text" name="assignment" placeholder="assignment" id="nick"></input>
+                    <input type="hidden" name="task" value="<%-elem%>" id="nick"></input>
+                    <button id="ADD" type="submit">ADD</button>
+                  </form>
+                </div>
+              </div>
               <div id="rightbottom">Status: <%-status[index]%></div>
             </div>
           </div>

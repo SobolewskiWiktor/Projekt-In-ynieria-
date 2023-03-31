@@ -4,6 +4,7 @@ const log = require("./database.js");
 const TASKS = require("./public/js/tasks");
 const USER = require("./public/js/user");
 const TEAM = require("./public/js/team");
+const ASSIG = require("./public/js/assigments");
 // Variables
 const PORT = 80;
 let role = "";
@@ -143,11 +144,12 @@ app.post("/taskDetail", async(req,res)=> {
     teamUser: TEAM.userName,
     teamTask: TEAM.taskName,
     refresh: TEAM.refreshGet,
+    assigments: ASSIG.Assignment, 
   };
   res.render("taskDetail", viewsTasks);
 });
 
-app.post("/addteammate", async(req,res)=>
+app.post("/addteammate", (req,res)=>
 {
   const user = req.body.nick;
   const task = req.body.task;
@@ -161,7 +163,7 @@ app.post("/addteammate", async(req,res)=>
   res.render("showTask", viewsTasksAdm);
 
 });
-app.post("/deleteteammate", async(req,res)=>
+app.post("/deleteteammate", (req,res)=>
 {
   const user = req.body.nick;
   const task = req.body.task;
@@ -176,6 +178,13 @@ app.post("/deleteteammate", async(req,res)=>
   res.render("showTask", viewsTasksAdm);
 
 });
+app.post("/addAssignments", (req, res) =>
+{
+   const task = req.body.task;
+   const assignment = req.body.assignment;
+   ASSIG.addAssigments(task, assignment); 
+   ASSIG.getAssgiments(); 
+} );
 
 app.listen(PORT, () => {
   console.log(`My app is running on htts://localhost:${PORT}`);

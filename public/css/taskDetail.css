@@ -209,10 +209,82 @@ li
    width: 100%;
    height: 70%;
    display: flex;
-   flex-direction: row;
+   flex-direction: column;
    color: white;
    justify-content: center;
    align-items: center;
+}
+#subtaskContent
+{
+	width: 100%;
+	height: 80%;
+}
+#subtaskButton
+{
+	width: 100%;
+	height: 20%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+#subtaskInput
+{
+  width: 20px;
+  height: 20px;
+  background-color: transparent;
+  border: 1px solid white;
+  transition-duration: 300ms;
+}
+#subtaskInput:hover
+{
+	background-color: grey;
+    border: 1px solid rgba(255, 255, 255, 0.259);
+	cursor: pointer;
+}
+#subtaskInput:checked
+{
+  background-color: var(--green);
+  border: 1px solid darkgreen;
+}
+#label
+{
+	margin-left: 10px;
+	color: white;
+	letter-spacing: 2px;
+}
+#subtask
+{
+	width: 300px;
+	height: 50px;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	margin-left: 20px;
+	border: 1px solid white;
+	border-radius: 10px;
+}
+#AssigmentsForm
+{
+	width: 100%;
+	height: 100%;
+	display: flex;
+	flex-wrap: wrap;
+}
+#subtasks
+{
+	width: 100%;
+	height: 80%;
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+}
+#addSubtask
+{
+	width: 100%;
+	height: auto;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
 #rightbottom
 {
@@ -285,4 +357,11 @@ li
 #name
 {
 	margin-left: 15px;
+}
+#conent
+{
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
 }
