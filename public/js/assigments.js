@@ -3,7 +3,7 @@ const Assignment =  [];
 
 function getAssgiments () 
 {
-    DB.query(`SELECT * FROM assignments where wykonanie = "NO" `, (err, result) => {
+    DB.query(`SELECT * FROM assignments`, (err, result) => {
         if(err)
         {
             console.log("ERROR", err);
@@ -26,7 +26,9 @@ function addAssigments(name, assignment)
 
 function UpdateAssigments(person, name, assignment)
 {
-    DB.query(`UPDATE assignments VALUE wykonanie = 'DONE', wykonujacy = '${person}' WHERE nazwa = '${assignment}' AND task = '${name}' `);
+    console.log("daje update assinment")
+    DB.query(`UPDATE assignments SET wykonanie = 'DONE', wykonujacy = '${person}' WHERE nazwa = '${assignment}' AND task = '${name}' `);
+    console.log(`UPDATE assignments SET wykonanie = 'DONE', wykonujacy = '${person}' WHERE nazwa = '${assignment}' AND task = '${name}'`)
 }
 
 module.exports = {

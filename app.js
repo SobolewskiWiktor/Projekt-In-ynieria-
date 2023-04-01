@@ -5,6 +5,9 @@ const TASKS = require("./public/js/tasks");
 const USER = require("./public/js/user");
 const TEAM = require("./public/js/team");
 const ASSIG = require("./public/js/assigments");
+const e = require("express");
+let LOGGIN = '0'; 
+let LogginName = ""; 
 // Variables
 const PORT = 80;
 let role = "";
@@ -22,65 +25,110 @@ app.set("view engine", "ejs");
 app.get("/", (req, res) => {
   res.sendFile(__dirname + "/public/html/login_screen.html");
 });
-app.get("/dashboard_user.html", (req, res) => {
-  const viewsTasks = {
-    tasks: TASKS.tasks,
-    status: TASKS.status,
-    description: TASKS.desc,
-  };
-  res.render("dashboard_user", viewsTasks);
-});
 
-app.get("/dashboard_admin.html", (req, res) => {
-  const viewsUsers = {
-    Name: USER.usersName,
-    Surname: USER.usersSurname,
-    Login: USER.usersLogin,
-    Status: USER.usersStatus,
-    Ref: USER.refreshGet,
-  };
-  res.render("dashboard_admin", viewsUsers);
-});
+  app.get("/dashboard_user.html", (req, res) => {
+    if(LOGGIN == '1')
+    {
+      const viewsTasks = {
+        tasks: TASKS.tasks,
+        status: TASKS.status,
+        description: TASKS.desc,
+      };
+      res.render("dashboard_user", viewsTasks);
+    }
+    else
+    {
+      res.sendFile(__dirname + "/public/html/errorLogin.html")
+    }
+  });
 
-//logins
-app.get("/loading_adm", (req, res) => {
-  res.sendFile(__dirname + "/public/html/loading_admin.html");
-});
-app.get("/loading_usr", (req, res) => {
-  res.sendFile(__dirname + "/public/html/loading_user.html");
-});
+  app.get("/dashboard_admin.html", (req, res) => {
+    if(LOGGIN == '1')
+    {
+      const viewsUsers = {
+        Name: USER.usersName,
+        Surname: USER.usersSurname,
+        Login: USER.usersLogin,
+        Status: USER.usersStatus,
+        Ref: USER.refreshGet,
+      };
+      res.render("dashboard_admin", viewsUsers);
+    }
+    else
+    {
+      res.sendFile(__dirname + "/public/html/errorLogin.html")
+    }
+  });
 
-//users
-app.get("/adminAddUser", (req, res) => {
-  res.render("addUser");
-});
+  //logins
+  app.get("/loading_adm", (req, res) => {
+    if(LOGGIN == '1')
+    {
+    res.sendFile(__dirname + "/public/html/loading_admin.html");
+    }
+    else
+    {
+      res.sendFile(__dirname + "/public/html/errorLogin.html")
+    }
+  });
+  app.get("/loading_usr", (req, res) => {
+    if(LOGGIN == '1')
+    {
+    res.sendFile(__dirname + "/public/html/loading_user.html");
+    }
+    else
+    {
+      res.sendFile(__dirname + "/public/html/errorLogin.html")
+    }
+  });
 
-//tasks
-app.get("/addTask", (req, res) => {
-  res.render("addTask");
-});
-app.get("/showTask", (req, res) => {
-  const viewsTasksAdm = {
-    tasks: TASKS.tasks,
-    status: TASKS.status,
-    description: TASKS.desc,
-  };
-  res.render("showTask", viewsTasksAdm);
-});
+  //users
+  app.get("/adminAddUser", (req, res) => {
+    if(LOGGIN == '1')
+    {
+      res.render("addUser");
+    }
+    else
+    {
+      res.sendFile(__dirname + "/public/html/errorLogin.html")
+    }
+  });
+
+  //tasks
+  app.get("/addTask", (req, res) => {
+    if(LOGGIN == '1')
+    {
+      res.render("addTask");
+    }
+    else
+    {
+      res.sendFile(__dirname + "/public/html/errorLogin.html")
+    }
+  });
+  app.get("/showTask", (req, res) => {
+    if(LOGGIN == 1)
+    {
+      const viewsTasksAdm = {
+        tasks: TASKS.tasks,
+        status: TASKS.status,
+        description: TASKS.desc,
+      };
+      res.render("showTask", viewsTasksAdm);
+    }
+    else
+    {
+      res.sendFile(__dirname + "/public/html/errorLogin.html")
+    }
+
+  });
 
 // Paths
 app.post("/login", async (req, res) => {
-  console.log("start login section");
-
   const userPassword = req.body.password;
-  console.log("PG PASS: ", userPassword);
   const userLogin = req.body.username;
-  console.log("PG LOGIN: ", userLogin);
-
   const login = (userLogin, userPassword) => {
     let userlogin = userLogin;
     let userpass = userPassword;
-
     if (userlogin != "" && userpass != "") {
       log.query(
         `select * from logins where login = ? and haslo = ?`,
@@ -91,7 +139,11 @@ app.post("/login", async (req, res) => {
           } else {
             if (result[0].haslo == userpass && result[0].login == userlogin) {
               console.log("loggin accepted");
+              LOGGIN = '1'; 
+              LogginName = result[0].login; 
+              console.log("Zalogowano: ", LogginName);
               console.log("ROLA: ", result[0].typ);
+              console.log("LOGGIN: ",LOGGIN)
               if (result[0].typ == "Admin") {
                 console.log("przenosze na adm");
                 res.redirect("/loading_adm");
@@ -107,84 +159,154 @@ app.post("/login", async (req, res) => {
   login(userLogin, userPassword);
 });
 
-app.post("/addUser", async (req, res) => {
-  console.log("start user adding section");
-  const Name = req.body.first_name;
-  const Surname = req.body.lastname;
-  const Login = req.body.username;
-  const Password = req.body.password;
-  const Role = req.body.role;
-  if (Role == "Admin") {
-    USER.addAdmin(Name, Surname, Login, "Active", Password);
-  } else if (Role == "User") {
-    USER.addUser(Name, Surname, Login, "Active", Password);
-  }
-  USER.refreshGet();
-  res.redirect("/loading_adm");
-});
+
+// tasks manament 
+  app.post("/addUser", async (req, res) => {
+    if(LOGGIN == '1')
+    {
+      console.log("start user adding section");
+      const Name = req.body.first_name;
+      const Surname = req.body.lastname;
+      const Login = req.body.username;
+      const Password = req.body.password;
+      const Role = req.body.role;
+      if (Role == "Admin") {
+        USER.addAdmin(Name, Surname, Login, "Active", Password);
+      } else if (Role == "User") {
+        USER.addUser(Name, Surname, Login, "Active", Password);
+      }
+      USER.refreshGet();
+      res.redirect("/loading_adm");
+    } 
+    else
+    {
+      res.sendFile(__dirname + "/public/html/errorLogin.html")
+    }
+  });
 
 
-app.post("/addTask", async (req, res) => {
-  const Name = req.body.name;
-  const TargetDate = req.body.target_date;
-  const Desc = req.body.desc;
-  const User = req.body.userlog;
+  app.post("/addTask", async (req, res) => {
+    if(LOGGIN == '1')
+    {
+      const Name = req.body.name;
+      const TargetDate = req.body.target_date;
+      const Desc = req.body.desc;
+      const User = req.body.userlog;
 
-  TASKS.add(Name, TargetDate, Desc, User);
-  TASKS.refresh();
-  res.redirect("/loading_adm");
-});
+      TASKS.add(Name, TargetDate, Desc, User);
+      TASKS.refresh();
+      res.redirect("/loading_adm");
+    }
+    else
+    {
+      res.sendFile(__dirname + "/public/html/errorLogin.html")
+    }
+  });
 
-app.post("/taskDetail", async(req,res)=> {
-  const viewsTasks = {
-    tasks: TASKS.tasks,
-    status: TASKS.status,
-    description: TASKS.desc,
-    witch: req.body.taskname,
-    teamUser: TEAM.userName,
-    teamTask: TEAM.taskName,
-    refresh: TEAM.refreshGet,
-    assigments: ASSIG.Assignment, 
-  };
-  res.render("taskDetail", viewsTasks);
-});
+  app.post("/taskDetail", async(req,res)=> {
+    if(LOGGIN == '1')
+    {
+      const viewsTasks = {
+        tasks: TASKS.tasks,
+        status: TASKS.status,
+        description: TASKS.desc,
+        witch: req.body.taskname,
+        teamUser: TEAM.userName,
+        teamTask: TEAM.taskName,
+        refresh: TEAM.refreshGet,
+        assigments: ASSIG.Assignment, 
+      };
+      res.render("taskDetail", viewsTasks);
+    }
+    else
+    {
+      res.sendFile(__dirname + "/public/html/errorLogin.html")
+    }
+  });
 
-app.post("/addteammate", (req,res)=>
-{
-  const user = req.body.nick;
-  const task = req.body.task;
-  TEAM.AddTeam(user,task);
-  TEAM.refreshGet(); 
-  const viewsTasksAdm = {
-    tasks: TASKS.tasks,
-    status: TASKS.status,
-    description: TASKS.desc,
-  };
-  res.render("showTask", viewsTasksAdm);
+  app.post("/addteammate", (req,res)=>
+  {
+    if(LOGGIN == '1')
+    {
+      const user = req.body.nick;
+      const task = req.body.task;
+      TEAM.AddTeam(user,task);
+      TEAM.refreshGet(); 
+      const viewsTasksAdm = {
+        tasks: TASKS.tasks,
+        status: TASKS.status,
+        description: TASKS.desc,
+      };
+      res.render("showTask", viewsTasksAdm);
+    }
+    else
+    {
+      res.sendFile(__dirname + "/public/html/errorLogin.html")
+    }
+  });
+  app.post("/deleteteammate", (req,res)=>
+  {
+    if(LOGGIN == '1')
+    {
+      const user = req.body.nick;
+      const task = req.body.task;
+      TEAM.DeleteTeam(user,task); 
+      TEAM.celarTables(); 
+      TEAM.refreshGet();
+      const viewsTasksAdm = {
+        tasks: TASKS.tasks,
+        status: TASKS.status,
+        description: TASKS.desc,
+      };
+      res.render("showTask", viewsTasksAdm);
+    }
+    else
+    {
+      res.sendFile(__dirname + "/public/html/errorLogin.html")
+    }
 
-});
-app.post("/deleteteammate", (req,res)=>
-{
-  const user = req.body.nick;
-  const task = req.body.task;
-  TEAM.DeleteTeam(user,task); 
-  TEAM.celarTables(); 
-  TEAM.refreshGet();
-  const viewsTasksAdm = {
-    tasks: TASKS.tasks,
-    status: TASKS.status,
-    description: TASKS.desc,
-  };
-  res.render("showTask", viewsTasksAdm);
+  });
+  app.post("/addAssignments", (req, res) =>
+  {
+    if(LOGGIN == '1')
+    {
+      const task = req.body.task;
+      const assignment = req.body.assignment;
+      ASSIG.addAssigments(task, assignment); 
+      ASSIG.getAssgiments();
+    } 
+    else
+    {
+      res.sendFile(__dirname + "/public/html/errorLogin.html")
+    }
+  });
 
-});
-app.post("/addAssignments", (req, res) =>
-{
-   const task = req.body.task;
-   const assignment = req.body.assignment;
-   ASSIG.addAssigments(task, assignment); 
-   ASSIG.getAssgiments(); 
-} );
+  app.post("/modifyAssignment", (req,res) => {
+    if(LOGGIN == '1')
+    {
+      const toUpdate = []; 
+      let nazwaas = []; 
+      ASSIG.Assignment.forEach((elem,index,arr) => {
+          if(elem.nazwa == req.body.assignment)
+          {
+            console.log("Modyfikuje: ", LogginName);
+            console.log("wybrales: ",elem.nazwa)
+            ASSIG.UpdateAssigments(LogginName, elem.task, elem.nazwa); 
+            ASSIG.getAssgiments();
+            const viewsTasksAdm = {
+              tasks: TASKS.tasks,
+              status: TASKS.status,
+              description: TASKS.desc,
+            };
+            res.render("showTask", viewsTasksAdm);
+          }
+      }); 
+    }
+    else
+    {
+      res.sendFile(__dirname + "/public/html/errorLogin.html")
+    }
+  });
 
 app.listen(PORT, () => {
   console.log(`My app is running on htts://localhost:${PORT}`);
