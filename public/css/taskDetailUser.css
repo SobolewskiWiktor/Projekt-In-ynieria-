@@ -173,6 +173,7 @@ li
 .user 
 {
 	font-size: 15px;
+	text-transform: capitalize;
 	margin-left: 2px;
 	margin-right: 2px;
 	color: white;
