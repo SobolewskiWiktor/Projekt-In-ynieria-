@@ -307,6 +307,10 @@ app.post("/login", async (req, res) => {
       res.sendFile(__dirname + "/public/html/errorLogin.html")
     }
   });
+  app.get("/logout", (req,res) => {
+   LOGGIN = 0; 
+   res.redirect("/")
+  });
 
 app.listen(PORT, () => {
   console.log(`My app is running on htts://localhost:${PORT}`);

@@ -388,7 +388,7 @@ progress {
   }
   
   progress::-webkit-progress-bar {
-	background-color: transparent;
+	background-color: var(--green);
   }
   
   progress::-webkit-progress-value {
