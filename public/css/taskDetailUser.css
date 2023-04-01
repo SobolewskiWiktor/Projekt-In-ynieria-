@@ -185,6 +185,9 @@ li
 .left .bottom .user:hover
 {
 	border: 3px solid rgb(69, 255, 193);
+	background-color: rgb(69, 255, 193);
+	color: var(--bgc);
+	font-size: 18px;
 	transition: 250ms;
 }
 .right
