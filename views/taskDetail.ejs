@@ -10,7 +10,19 @@
 </head>
 <body>
   <% refresh() %>
-  <div id="conent">
+  <%let countOfAssignment =assigments.length%>
+  <%let coutOfDoneAssignment = 0 %>
+  <%assigments.forEach((elem, inedx, arr) => {%>
+     <%if(elem.wykonanie == 'DONE') {%>
+      <%console.log("BACKEND | FIND DONE ")%>
+       <%coutOfDoneAssignment += 1%>
+      <%}%>
+    <%})%>
+    <%let forProcessBar = (coutOfDoneAssignment/countOfAssignment)*100 %>
+    <%console.log("BACKEND | count all ", countOfAssignment)%>
+    <%console.log("BACKEND | count Done ", coutOfDoneAssignment)%>
+    <%console.log("BACKEND | Procent ", forProcessBar)%>
+    <div id="conent">
     <div id="top">
       <nav id="menu">
         <li class="option"><a href="/loading_adm" class="option">Back</a></li>
@@ -82,7 +94,10 @@
                   </form>
                 </div>
               </div>
-              <div id="rightbottom">Status: <%-status[index]%></div>
+              <div id="rightbottom">
+                <div id="bottomTop">Progress:</div>
+                <div id="bottomBot"><progress value="<%-forProcessBar%>" max="100"></progress></div>
+              </div>
             </div>
           </div>
         <%}%>
