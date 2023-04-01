@@ -126,7 +126,6 @@ li
 .left .top .progress_bar
 {
 	height: 5vh;
-	margin-top: 10px;
 	margin-left: 10px;
     margin-right: 10px;
 	width: 90%;
@@ -140,6 +139,7 @@ li
 	height: 44.5vh;
 	margin-left: 10px;
     margin-right: 10px;
+	margin-bottom: 10px;
 	width: 90%;
 	display: flex;
 	flex-direction: row;
@@ -148,9 +148,39 @@ li
 }
 .left .bottom
 {
+	margin-top: 10px;
     height: 31.5vh;
 	margin-left: 1vh;
 	margin-right: 1vh;
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: center;
+	align-items: top;
+}
+.left .bottom .user 
+{
+	margin-left: 5px;
+	margin-right: 5px;
+	color: white;
+	border: 1px solid white;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	border-radius: 10px;
+	width: 167px;
+	height: 50px;
+}
+.left .bottom .user .user_data 
+{
+	display: flex;
+	width: 90%;
+	height: 80%;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	word-break: break-word;
 }
 .right
 {
