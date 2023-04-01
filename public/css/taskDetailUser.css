@@ -95,7 +95,7 @@ li
 {
 	text-align: center;
     flex-direction: column;
-	overflow-wrap: break-word;
+	word-break: break-all;
     color: white;
 	width: 375px;
 }
@@ -109,6 +109,11 @@ li
     height: 50vh;
     border: 1px solid white;
     border-radius: 15px;
+}
+.left .top .desc
+{
+	margin-left: 10px;
+    margin-right: 10px;
 }
 .left .bottom
 {
@@ -134,7 +139,7 @@ li
     transition: 200ms;
 }
 
-.subtask
+.right .subtask
 {
     margin-left: 20px;
     margin-right: 20px;
@@ -142,7 +147,6 @@ li
 	flex-direction: row;
 	align-items: center;
 	justify-content: space-around;
-	width: 90%;
 	height: 110px;
 	border: 1px solid white;
 	border-radius: 10px;
