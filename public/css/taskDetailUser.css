@@ -117,7 +117,7 @@ li
 	margin-top: 10px;
 	margin-left: 10px;
     margin-right: 10px;
-	width: 90%;
+	width: 97.5%;
 	display: flex;
 	flex-direction: row;
 	align-items: center;
@@ -125,24 +125,36 @@ li
 }
 .left .top .progress_bar
 {
-	height: 5vh;
+	height: 20vh;
 	margin-left: 10px;
     margin-right: 10px;
-	width: 90%;
+	width: 97.5%;
 	display: flex;
-	flex-direction: row;
+	flex-direction: column;
 	align-items: center;
-	justify-content: space-around;
+	justify-content: center;
+	margin-bottom: 10px;
+}
+.progress_bar .text
+{
+	height: 20px;
+}
+.progress_bar .bar
+{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 80%;
+	width: 95%;
 }
 .left .top .desc
 {
-	height: 44.5vh;
+	height: 30.5vh;
 	margin-left: 10px;
     margin-right: 10px;
-	margin-bottom: 10px;
-	width: 90%;
+	width: 97.5%;
 	display: flex;
-	flex-direction: row;
+	flex-direction: column;
 	align-items: center;
 	justify-content: space-around;
 }
@@ -158,10 +170,12 @@ li
 	justify-content: center;
 	align-items: top;
 }
-.left .bottom .user 
+.user 
 {
-	margin-left: 5px;
-	margin-right: 5px;
+	font-size: 15px;
+	text-transform: capitalize;
+	margin-left: 2px;
+	margin-right: 2px;
 	color: white;
 	border: 1px solid white;
 	display: flex;
@@ -169,10 +183,10 @@ li
 	justify-content: center;
 	align-items: center;
 	border-radius: 10px;
-	width: 165px;
-	height: 50px;
+	width: 173px;
+	height: 45px;
 }
-.left .bottom .user .user_data 
+.user .user_data 
 {
 	display: flex;
 	width: 90%;
@@ -182,10 +196,13 @@ li
 	align-items: center;
 	word-break: break-word;
 }
-.left .bottom .user:hover
+.user:hover
 {
-	border: 3px solid rgb(69, 255, 193);
-	transition: 250ms;
+	border: 1px solid rgb(69, 255, 193);
+	background-color: rgb(69, 255, 193);
+	color: var(--bgc);
+	font-size: 17px;
+	transition: 200ms;
 }
 .right
 {
@@ -200,7 +217,7 @@ li
 }
 .left .top:hover, .right:hover
 {
-    border: 3px solid var(--green);
+    border: 1px solid var(--green);
     transition: 200ms;
 }
 .right .subtask
@@ -218,7 +235,7 @@ li
 }
 .subtask:hover
 {
-    border: 3px solid var(--dark_green);
+    border: 1px solid var(--dark_green);
     transition: 200ms;
 }
 .subtask_name
