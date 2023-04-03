@@ -44,7 +44,12 @@
             <%if(status[index]=="INP" ) {%>
               <div id="task">
                 <div id="taskText"><%-elem%></div>
-                <div id="taskButton"><a>Details</a>
+                <form action="/taskDetail" method="POST">
+                  <button id="taskButton" type="submit">
+                    <a>Details</a>
+                    <input name="taskname" id="taskname" type="hidden" value="<%-elem%>"></input>
+                    <div id="bar2"></div>
+                  </button>
                   <div id="bar2"></div>
                 </div>
               </div>
@@ -59,7 +64,12 @@
             <%if(status[index]=="DONE" ) {%>
               <div id="task">
                 <div id="taskText"><%-elem%></div>
-                <div id="taskButton"><a>Details</a>
+                <form action="/taskDetail" method="POST">
+                  <button id="taskButton" type="submit">
+                    <a>Details</a>
+                    <input name="taskname" id="taskname" type="hidden" value="<%-elem%>"></input>
+                    <div id="bar2"></div>
+                  </button>
                   <div id="bar2"></div>
                 </div>
               </div>

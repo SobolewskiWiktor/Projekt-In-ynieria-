@@ -30,13 +30,14 @@ DB.query(`select * from tasks`, async (err, result) => {
   }
 });
 
-function refresh() {
+function refresh() { 
   DB.query(`select * from tasks`, async (err, result) => {
     if (err) {
       console.log("ERROR", err);
     } else {
       result.forEach((elem, index, arr) => {
         tasks[index] = elem.nazwa;
+        updateState(elem.nazwa);
         status[index] = elem.status;
         desc[index] = elem.opis;
       });
@@ -51,9 +52,27 @@ function add(name, targetDate, desc, user) {
 }
 
 function deleteTask(name, status) {
-  if ((status = "Done")) {
+  if ((status == "Done")) {
     DB.query(`DELETE FROM TASKS WHERE name=${name}`);
   }
+}
+
+function updateState(name) {
+    DB.query(`SELECT * FROM assignments where task = '${name}'`, (err, result) => {
+      if(err)
+      {
+        console.log("ERROR", err);
+      }
+      else
+      {
+        result.forEach((elem, idenx, add) => {
+          if(elem.wykoanie == 'DONE')
+          {
+            DB.query(`UPDATE tasks wykonanie = 'INP' where nazwa = '${name}'`)
+          }
+        })
+      }
+    });
 }
 module.exports = {
   tasks,
@@ -62,4 +81,5 @@ module.exports = {
   add,
   deleteTask,
   refresh,
+  updateState
 };
