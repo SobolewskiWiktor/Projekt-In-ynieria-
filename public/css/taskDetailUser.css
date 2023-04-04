@@ -56,8 +56,7 @@ li, a{
     transition-duration: 500ms;
 	padding: 10px;
 }
-.option:hover
-{
+.option:hover, a:hover{
 	color: var(--green);
 	cursor: pointer;
 	fill: var(--green);
