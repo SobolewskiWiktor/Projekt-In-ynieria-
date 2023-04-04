@@ -43,9 +43,6 @@ li, a{
 	justify-content: center;
 	align-items: center;
 }
-#top:hover{
-	border:1px solid var(--green);
-}
 li
 {
 	text-decoration: none;
