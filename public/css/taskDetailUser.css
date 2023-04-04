@@ -161,11 +161,11 @@ li
 .left .bottom
 {
 	margin-top: 10px;
-    height: 31.5vh;
-	margin-left: 1vh;
-	margin-right: 1vh;
+    height: auto;
+	margin-left: 3px;
+	margin-right: 3px;
 	display: flex;
-	flex-direction: column;
+	flex-direction: row;
 	flex-wrap: wrap;
 	justify-content: center;
 	align-items: center;
@@ -213,7 +213,7 @@ li
     display: flex;
     flex-direction: column;
     width: 400px;
-    height: 100%;
+    height: auto;
     border: 1px solid white;
     border-radius: 15px;
 }
