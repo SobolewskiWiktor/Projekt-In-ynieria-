@@ -211,7 +211,7 @@ li
     display: flex;
     flex-direction: column;
     width: 400px;
-    height: 82vh;
+    height: 100%;
     border: 1px solid white;
     border-radius: 15px;
 }
@@ -224,6 +224,7 @@ li
 {
     margin-left: 20px;
     margin-right: 20px;
+	margin-bottom: 20px;
 	display: flex;
 	flex-direction: row;
 	align-items: center;
