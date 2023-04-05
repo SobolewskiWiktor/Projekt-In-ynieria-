@@ -74,7 +74,7 @@ a, li{
     border-color: var(--green);
     transition: 200ms;
 }
-.left .task_name{
+.left .top .task_name{
     width: 100%;
     height: 80px;
 
@@ -83,7 +83,7 @@ a, li{
     justify-content: center;
     align-items: center;
 }
-.left .coordinators{
+.left .top .coordinators{
     width: 100%;
     min-height: 290px;
     max-height: auto;
@@ -93,7 +93,7 @@ a, li{
     justify-content: center;
     align-items: center;
 }
-.left .coordinators .text{
+.left .top .coordinators .text{
     width: 100%;
 
     display: flex;
@@ -101,7 +101,7 @@ a, li{
     justify-content: center;
     align-items: center;
 }
-.left .coordinators .users{
+.left .top .coordinators .users{
     width: 100%;
 
     display: flex;
@@ -110,7 +110,7 @@ a, li{
     align-items: top;
     flex-wrap: wrap;
 }
-.left .progress_bar{
+.left .top .progress_bar{
     width: 100%;
     height: 30px;
 
