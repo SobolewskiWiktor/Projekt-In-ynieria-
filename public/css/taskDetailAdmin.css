@@ -89,9 +89,26 @@ a, li{
     max-height: auto;
 
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
+}
+.left .coordinators .text{
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.left .coordinators .users{
+    width: 100%;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: top;
+    flex-wrap: wrap;
 }
 .left .progress_bar{
     width: 100%;
@@ -108,8 +125,10 @@ a, li{
 progress{
     width: 370px;
     height: 20px;
+
     border: 2px solid white;
     border-radius: 10px;
+    
     overflow: hidden;
 }   
 progress::-webkit-progress-bar{
