@@ -150,21 +150,19 @@ a, li{
     justify-content: top;
     align-items: center;
 }
-.right .top{
+.add_subtask{
     width: 100%;
     height: 80px;
-    
-    margin-bottom: 10px;
-    
-    border: 2px solid whitesmoke;
+
+    border: 2px solid white;
     border-radius: 10px;
-    
+
     display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
 }
-.right .top:hover{
+.add_subtask:hover{
     border-color: var(--green);
     transition: 200ms;
 }
