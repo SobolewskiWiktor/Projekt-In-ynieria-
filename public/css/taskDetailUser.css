@@ -4,12 +4,11 @@
 	--dark_green: #009306;
 	background-color: var(--bgc);
 }
-
-
 body{
 	margin: 0;
 	padding: 0;
     font-family: 'Jost', sans-serif;
+	color: white;
 }
 
 /* desktop */
@@ -40,7 +39,7 @@ li, a{
 	margin-top: 20px;
 	display: flex;
 	width: 100%;
-	justify-content: center;
+	justify-content: space-around;
 	align-items: center;
 }
 .option
@@ -103,7 +102,7 @@ li, a{
 	align-items: center;
 	justify-content: space-around;
     height: 50vh;
-    border: 1px solid white;
+    border: 2px solid white;
     border-radius: 15px;
 }
 .left .top .taskName
@@ -174,7 +173,7 @@ li, a{
 	margin-right: 2px;
 	margin-bottom: 5px;
 	color: white;
-	border: 1px solid white;
+	border: 2px solid white;
 	display: flex;
 	flex-direction: row;
 	justify-content: center;
@@ -195,7 +194,7 @@ li, a{
 }
 .user:hover
 {
-	border: 1px solid rgb(69, 255, 193);
+	border: 2px solid rgb(69, 255, 193);
 	background-color: rgb(69, 255, 193);
 	color: var(--bgc);
 	font-size: 17px;
@@ -203,37 +202,38 @@ li, a{
 }
 .right
 {
+	text-align: center;
     margin-left: 5px;
     margin-right: 5px;
     display: flex;
     flex-direction: column;
+    justify-content: center;
     width: 400px;
     height: auto;
-    border: 1px solid white;
+    border: 2px solid white;
     border-radius: 15px;
 }
 .left .top:hover, .right:hover
 {
-    border: 1px solid var(--green);
+    border: 2px solid var(--green);
     transition: 200ms;
 }
 .right .subtask
 {
-    margin-left: 20px;
-    margin-right: 20px;
-	margin-bottom: 20px;
+    margin-left: 10px;
+    margin-right: 10px;
 	display: flex;
 	flex-direction: row;
 	align-items: center;
 	justify-content: space-around;
-	height: 110px;
-	border: 1px solid white;
+	height: 100px;
+	border: 2px solid white;
 	border-radius: 10px;
     margin-top:20px
 }
 .subtask:hover
 {
-    border: 1px solid var(--dark_green);
+    border: 2px solid var(--dark_green);
     transition: 200ms;
 }
 .subtask_name
