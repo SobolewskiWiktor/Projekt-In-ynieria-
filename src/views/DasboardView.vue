@@ -34,7 +34,7 @@
                          <input class="inputWorker" placeholder="Nazwisko">
                          <input class="inputWorker" placeholder="Login">
                          <input class="inputWorker" placeholder="Haslo">
-                         <button id="Add">Add</button>
+                         <button id="Add">ADD</button>
                        </form>
                     </div>
                     <div id="showWorker" v-else>
@@ -44,11 +44,26 @@
                         </button>
                     </div>
                 </div>
-
                 <div id="workers" v-else-if="Projects.length != 0">
-                    <button id="Project" v-for="(projekt, index) in Projects">
-                     <div id="name">{{Projects[index]}}</div> 
-                    </button>
+                    <div id="selectOptionWarker">
+                        <button id="selectOptionWarkerButtonFocus" v-if="showAddProject == 0">LIST</button>
+                        <button id="selectOptionWarkerButton" v-if="showAddProject == 1" @click.prevent="closeAddProject()">LIST</button>
+                        <button id="selectOptionWarkerButton" v-if="showAddProject == 0" @click.prevent="addProject()">ADD</button>
+                        <button id="selectOptionWarkerButtonFocus" v-if="showAddProject == 1">ADD</button>
+                    </div>
+                    <div id="addWorker" v-if="showAddProject == 1">
+                       <form id="formWorker">
+                         <input class="inputWorker" placeholder="Nazwa">
+                         <input class="inputWorker" placeholder="Koordynator">
+                         <input class="inputWorker" placeholder="Opis">
+                         <button id="Add">ADD</button>
+                       </form>
+                    </div>
+                    <div id="showWorker" v-else>
+                        <button id="Project" v-for="(projekt, index) in Projects">
+                        <div id="name">{{Projects[index]}}</div> 
+                        </button>
+                    </div>
                 </div>
 
                 <div id="workers" v-else>
@@ -133,6 +148,14 @@ export default{
         async closeAddWorker()
         {
             this.showAddWorker = 0; 
+        },
+        async addProject()
+        {
+           this.showAddProject = 1; 
+        },
+        async closeAddProject()
+        {
+            this.showAddProject = 0; 
         }
     }
 }

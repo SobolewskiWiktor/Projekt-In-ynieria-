@@ -256,10 +256,12 @@
 #Add
 {
     margin-top: 30px;
-    width: 200px;
+    width: 150px;
     height: 30px;
     background-color: transparent;
     color: white;
+    font-size: 20px;
+    letter-spacing: 3px;
     border: 2px solid white;
     transition-duration: 400ms;
 }
@@ -276,6 +278,7 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
+    animation: outerLeft 2s;
 }
 #addWorker
 {
@@ -284,6 +287,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    animation: innerLeft 2s;
 }
 #formWorker
 {
@@ -298,19 +302,21 @@
 .inputWorker
 {
     width: 350px;
-    height: 30px;
+    height: 50px;
     color: white;
     background-color: transparent;
     border: none;
-    border-bottom: 2px solid white;
     margin-top: 15px;
+    border-bottom: 2px solid white;
     transition-duration: 400ms;
     font-size: 20px;
     letter-spacing: 2px;
+    border-radius: 5px 5px 0px 0px;
 }
 .inputWorker:hover
 {
     border-bottom: 2px solid #41b883;
+    color: #41b883;
     cursor: pointer;
 }
 .inputWorker:focus
@@ -320,4 +326,23 @@
 @keyframes animate {
     0% {opacity: 0;}
     100% {opacity: 1;}
+}
+@keyframes innerLeft
+{
+    0%{
+       opacity: 0;
+      }
+    100%{
+        opacity: 1;
+      }
+}
+
+@keyframes outerLeft
+{
+    0%{
+        opacity: 0;
+       }
+     100%{
+         opacity: 1;
+       }
 }
