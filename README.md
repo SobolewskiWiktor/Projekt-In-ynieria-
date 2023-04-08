@@ -1,32 +1,41 @@
-# Projekt inżynieria oprogramowania
+# projekt-inz
 
-Zamysłem projektu jest strona internetowa do zarządzania czasem pracy oraz zadaniami pracowników 
-Do jej funkcjonalności nalerzą:
-``` 
-  - Zliczanie godziń pracowniczych wpisywanych przez użytkownika i akaceptowanych przez administratora 
-```
-```
-  - Przypisywanie TODO przez administratora do pracownika 
-```
-```
-  - Przypisywanie projektu przez administratora do pracownika
-``` 
-```
-  - Oznaczanie progressu jak i statusu danego TODO w projekcie przez pracownika 
-``` 
-```
-  - Możliwość składania podstawowych podań w aplikacji 
-``` 
-```
-  - Możliwość podglądu "elektronicznych pasków"
-  ```
+This template should help get you started developing with Vue 3 in Vite.
 
-  
-  Stack technologiczny 
-  ```
-    -SQL 
-    -HTML 5 
-    -CSS 3 
-    -Express lub php 
-    -JS ES6
+## Recommended IDE Setup
+
+[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
+
+## Customize configuration
+
+See [Vite Configuration Reference](https://vitejs.dev/config/).
+
+## Project Setup
+
+```sh
+npm install
+```
+
+### Compile and Hot-Reload for Development
+
+```sh
+npm run dev
+```
+
+### Compile and Minify for Production
+
+```sh
+npm run build
+```
+
+### Run Unit Tests with [Vitest](https://vitest.dev/)
+
+```sh
+npm run test:unit
+```
+
+### Lint with [ESLint](https://eslint.org/)
+
+```sh
+npm run lint
 ```
