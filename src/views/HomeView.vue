@@ -35,7 +35,7 @@ export default{
         Login : this.Login,
         Password : this.Password,
       }
-      let request = await axios.post("http://localhost:300/login",{user})
+      let request = await axios.post("http://sobol.cloud:1808/login",{user})
       console.log(request)
       if(request.data.Loginstatus == "OK")
       {

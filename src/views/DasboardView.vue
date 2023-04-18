@@ -30,11 +30,12 @@
                     </div>
                     <div id="addWorker" v-if="showAddWorker == 1">
                        <form id="formWorker">
-                         <input class="inputWorker" placeholder="Imie">
-                         <input class="inputWorker" placeholder="Nazwisko">
-                         <input class="inputWorker" placeholder="Login">
-                         <input class="inputWorker" placeholder="Haslo">
-                         <button id="Add">ADD</button>
+                         <input class="inputWorker" placeholder="Imie" v-model="addName">
+                         <input class="inputWorker" placeholder="Nazwisko" v-model="addSurname">
+                         <input class="inputWorker" placeholder="Login" v-model="addLogin">
+                         <input class="inputWorker" placeholder="Haslo" v-model="addPassword">
+                         <input class="inputWorker" placeholder="Typ" v-model="addType">
+                         <button id="Add" @click.prevent="AddWorkerToBase()">ADD</button>
                        </form>
                     </div>
                     <div id="showWorker" v-else>
@@ -103,6 +104,7 @@
 
 <script>
 import '@/assets/dashboard.css'
+import { useToast } from "vue-toastification"
 import axios from 'axios'
 export default{
     data()
@@ -112,6 +114,11 @@ export default{
        workers: [], 
        showAddWorker: 0, 
        showAddProject:0,
+       addName:'',
+       addSurname:'',
+       addLogin:'',
+       addPassword:'',
+       addType:'',
        }
     },
     methods:
@@ -124,7 +131,7 @@ export default{
         async getWorkers()
         {
           this.Projects = [];
-          let result = await axios.get("http://localhost:300/getWorker");
+          let result = await axios.get("http://sobol.cloud:1808/getWorker");
           console.log(result)
           result.data.Login.forEach((elem, index, arr) =>{
              this.workers[index] = elem; 
@@ -134,7 +141,7 @@ export default{
         async getProject()
         {
             this.workers = []; 
-            let result = await axios.get("http://localhost:300/getProject");
+            let result = await axios.get("http://sobol.cloud:1808/getProject");
             console.log(result)
           result.data.projekt.forEach((elem, index, arr) =>{
              this.Projects[index] = elem; 
@@ -148,6 +155,7 @@ export default{
         async closeAddWorker()
         {
             this.showAddWorker = 0; 
+            getWorkers()
         },
         async addProject()
         {
@@ -156,7 +164,60 @@ export default{
         async closeAddProject()
         {
             this.showAddProject = 0; 
+        },
+        async AddWorkerToBase()
+        {
+           let newUser = {
+              Name: this.addName,
+              Surname: this.addSurname,
+              Login: this.addLogin,
+              Password: this.addPassword,
+              Type: this.addType, 
+           }
+           let result = await axios.post('http://sobol.cloud:1808/addWorkerToBase', {newUser})
+           console.log(result);
+           if(result.data.AddStatus == "OK")
+            {
+                this.toastService.success("Tillagd", {
+                position: "top-center",
+                timeout: 5000,
+                closeOnClick: true,
+                pauseOnFocusLoss: true,
+                pauseOnHover: true,
+                draggable: true,
+                draggablePercent: 0.6,
+                showCloseButtonOnHover: false,
+                hideProgressBar: false,
+                closeButton: "button",
+                icon: true,
+                rtl: false
+                })
+                
+                this.showAddWorker = 0; 
+                getWorkers()
+            }
+            else
+            {
+                this.toastService.error("FAILED", {
+                position: "top-center",
+                timeout: 5000,
+                closeOnClick: true,
+                pauseOnFocusLoss: true,
+                pauseOnHover: true,
+                draggable: true,
+                draggablePercent: 0.6,
+                showCloseButtonOnHover: false,
+                hideProgressBar: false,
+                closeButton: "button",
+                icon: true,
+                rtl: false
+                }); 
+            }
         }
+    },
+    mounted()
+    {
+      this.toastService = useToast();
     }
 }
 
