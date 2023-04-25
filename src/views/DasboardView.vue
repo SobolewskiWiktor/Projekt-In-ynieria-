@@ -20,7 +20,7 @@
               <div id="title" v-else>Home</div>
             </div>
             <div id="contentRightRest">
-
+                
                 <div id="workers" v-if="workers.length != 0">
                     <div id="selectOptionWarker">
                         <button id="selectOptionWarkerButtonFocus" v-if="showAddWorker == 0">LIST</button>
@@ -30,11 +30,11 @@
                     </div>
                     <div id="addWorker" v-if="showAddWorker == 1">
                        <form id="formWorker">
-                         <input class="inputWorker" placeholder="Imie" v-model="addName">
-                         <input class="inputWorker" placeholder="Nazwisko" v-model="addSurname">
+                         <input class="inputWorker" placeholder="Name" v-model="addName">
+                         <input class="inputWorker" placeholder="Surname" v-model="addSurname">
                          <input class="inputWorker" placeholder="Login" v-model="addLogin">
-                         <input class="inputWorker" placeholder="Haslo" v-model="addPassword">
-                         <input class="inputWorker" placeholder="Typ" v-model="addType">
+                         <input class="inputWorker" placeholder="Password" v-model="addPassword">
+                         <input class="inputWorker" placeholder="Type" v-model="addType">
                          <button id="Add" @click.prevent="AddWorkerToBase()">ADD</button>
                        </form>
                     </div>
@@ -45,25 +45,32 @@
                         </button>
                     </div>
                 </div>
+
                 <div id="workers" v-else-if="Projects.length != 0">
-                    <div id="selectOptionWarker">
-                        <button id="selectOptionWarkerButtonFocus" v-if="showAddProject == 0">LIST</button>
-                        <button id="selectOptionWarkerButton" v-if="showAddProject == 1" @click.prevent="closeAddProject()">LIST</button>
-                        <button id="selectOptionWarkerButton" v-if="showAddProject == 0" @click.prevent="addProject()">ADD</button>
-                        <button id="selectOptionWarkerButtonFocus" v-if="showAddProject == 1">ADD</button>
+                    <div id="view" v-if="showProjectDetails == 0">
+                        <div id="selectOptionWarker">
+                            <button id="selectOptionWarkerButtonFocus" v-if="showAddProject == 0">LIST</button>
+                            <button id="selectOptionWarkerButton" v-if="showAddProject == 1" @click.prevent="closeAddProject()">LIST</button>
+                            <button id="selectOptionWarkerButton" v-if="showAddProject == 0" @click.prevent="addProject()">ADD</button>
+                            <button id="selectOptionWarkerButtonFocus" v-if="showAddProject == 1">ADD</button>
+                        </div>
+                        <div id="addWorker" v-if="showAddProject == 1">
+                        <form id="formWorker">
+                            <input class="inputWorker" placeholder="Name" v-model="addTaskName">
+                            <input class="inputWorker" placeholder="Coordynator" v-model="addTaskKoor">
+                            <input class="inputWorker" placeholder="Descripton" v-model="addTaskDesc">
+                            <button id="Add" @click.prevent=" addTaskToBase() ">ADD</button>
+                        </form>
+                        </div>
+                        <div id="showWorker" v-else>
+                            <button id="Project" v-for="(projekt, index) in Projects" @click.prevent="showselect(projekt)">
+                            <div id="name">{{Projects[index]}}</div> 
+                            </button>
+                        </div>
                     </div>
-                    <div id="addWorker" v-if="showAddProject == 1">
-                       <form id="formWorker">
-                         <input class="inputWorker" placeholder="Nazwa">
-                         <input class="inputWorker" placeholder="Koordynator">
-                         <input class="inputWorker" placeholder="Opis">
-                         <button id="Add">ADD</button>
-                       </form>
-                    </div>
-                    <div id="showWorker" v-else>
-                        <button id="Project" v-for="(projekt, index) in Projects">
-                        <div id="name">{{Projects[index]}}</div> 
-                        </button>
+                    <div id="view" v-else>
+                        <AssingmentView :message="AssingmentView"></AssingmentView>
+                        <component :is="AssingmentView"></component>
                     </div>
                 </div>
 
@@ -106,6 +113,8 @@
 import '@/assets/dashboard.css'
 import { useToast } from "vue-toastification"
 import axios from 'axios'
+import { RouterView, RouterLink } from 'vue-router';
+import AssingmentView from '@/views/AssingmentView.vue'
 export default{
     data()
     {
@@ -114,15 +123,45 @@ export default{
        workers: [], 
        showAddWorker: 0, 
        showAddProject:0,
+       showProjectDetails: 0,
        addName:'',
        addSurname:'',
        addLogin:'',
        addPassword:'',
        addType:'',
+       addTaskName: '',
+       addTaskDesc: '',
+       addTaskKoor: '',
+       TaskSelect: 'test', 
        }
     },
     methods:
     {
+        async showselect(projekt) 
+        {
+            this.toastService.info(projekt, {
+                position: "top-right",
+                timeout: 5000,
+                closeOnClick: true,
+                pauseOnFocusLoss: true,
+                pauseOnHover: true,
+                draggable: true,
+                draggablePercent: 0.6,
+                showCloseButtonOnHover: false,
+                hideProgressBar: false,
+                closeButton: "button",
+                icon: true,
+                rtl: false
+                })
+                let Project = {
+                    Name : projekt,
+                }
+                let result = await axios.post("http://sobol.cloud:1808/sendProjectName", {Project})
+                console.log(result); 
+                this.showProjectDetails = 1; 
+                console.log('this.showProjectDetails')
+                console.log(this.showProjectDetails)
+        },
         async Home()
         {
             this.Projects = [];
@@ -164,6 +203,7 @@ export default{
         async closeAddProject()
         {
             this.showAddProject = 0; 
+            getProject();
         },
         async AddWorkerToBase()
         {
@@ -179,7 +219,7 @@ export default{
            if(result.data.AddStatus == "OK")
             {
                 this.toastService.success("Tillagd", {
-                position: "top-center",
+                position: "top-right",
                 timeout: 5000,
                 closeOnClick: true,
                 pauseOnFocusLoss: true,
@@ -199,7 +239,7 @@ export default{
             else
             {
                 this.toastService.error("FAILED", {
-                position: "top-center",
+                position: "top-right",
                 timeout: 5000,
                 closeOnClick: true,
                 pauseOnFocusLoss: true,
@@ -213,11 +253,61 @@ export default{
                 rtl: false
                 }); 
             }
+        },
+        async addTaskToBase()
+        {
+            let newProject = {
+            Name: this.addTaskName,
+            Koord: this.addTaskKoor,
+            Desc: this.addTaskDesc
+            }
+            let request = axios.post('http://sobol.cloud:1808/addProjectToBase', {newProject}); 
+            if(request.data.AddStatus == "OK")
+            {
+                this.toastService.success("Tillagd", {
+                        position: "top-right",
+                        timeout: 5000,
+                        closeOnClick: true,
+                        pauseOnFocusLoss: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        draggablePercent: 0.6,
+                        showCloseButtonOnHover: false,
+                        hideProgressBar: false,
+                        closeButton: "button",
+                        icon: true,
+                        rtl: false
+                        })
+
+                    this.showAddProject = 0; 
+                    getProject();
+            }
+            else
+            {
+                this.toastService.error("FAILED", {
+                        position: "top-right",
+                        timeout: 5000,
+                        closeOnClick: true,
+                        pauseOnFocusLoss: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        draggablePercent: 0.6,
+                        showCloseButtonOnHover: false,
+                        hideProgressBar: false,
+                        closeButton: "button",
+                        icon: true,
+                        rtl: false
+                        }); 
+            }
         }
     },
     mounted()
     {
-      this.toastService = useToast();
+        this.toastService = useToast();
+    },
+    components: 
+    {
+        AssingmentView,
     }
 }
 

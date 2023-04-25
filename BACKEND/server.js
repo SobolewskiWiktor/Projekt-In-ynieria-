@@ -28,7 +28,7 @@ app.post('/login', (req,res) => {
     login = req.body.user.Login;
     password = req.body.user.Password
     let fromBase = ''; 
-    con.query(`select haslo, typ from WORKERS where login = '`+login+`'`, (err, result) => {
+    con.query(`select password, type from WORKERS where login = '`+login+`'`, (err, result) => {
         if(err)
         {
           console.log("ERROR: "+ err)
@@ -46,13 +46,13 @@ app.post('/login', (req,res) => {
           }
           else
           {
-            if(result[0].haslo == password)
+            if(result[0].password == password)
             {
                 console.log("Accept")
                 res.json({
                     Loginstatus: 'OK',
                     Loginlogin: login,
-                    Type: result[0].typ
+                    Type: result[0].type
                 })
             }
           }
@@ -73,8 +73,8 @@ app.get("/getWorker", (req,res) => {
         else
         {
             result.forEach((elem, index, arr) => {
-                console.log("dodaje: "+elem.imie)
-                workers[index] = elem.imie;
+                console.log("dodaje: "+elem.login)
+                workers[index] = elem.login;
             })
             res.json({
                 Login: workers
@@ -85,7 +85,7 @@ app.get("/getWorker", (req,res) => {
 
 app.post("/addWorkerToBase", (req,res) => 
     {
-        con.query(`INSERT INTO WORKERS (imie, nazwisko, login, haslo, typ) VALUES (
+        con.query(`INSERT INTO WORKERS (name, surname, login, password, type) VALUES (
             '`+req.body.newUser.Name+`',
             '`+req.body.newUser.Surname+`',
             '`+req.body.newUser.Login+`',
@@ -105,12 +105,76 @@ app.post("/addWorkerToBase", (req,res) =>
         })
     });
 
-app.get('getProject', (req,res) => {
-    res.json({
-        projekt: ['Programowanie bazy', 'Napisanie backendu', 'Zrobienie fronta', 'Konfiguracja serwera prod.']
+app.get('/getProject', (req,res) => {
+    let projects = []; 
+    con.query(`select * from TASKS`, (err, result) => {
+        if(err)
+        {
+            console.log("ERROR ", err)
+        }
+        else
+        {
+            result.forEach((elem, index, arr) =>{
+                projects[index] = elem.name;
+            })
+            res.json({
+                projekt: projects, 
+            })
+        }
     })
 })
+app.post('/addProjectToBase',async  (req, res) => {
+    let korrID = -1; 
+    let result = await con.query(`SELECT id FROM WORKERS where login = '`+req.body.newProject.Koord+`'`, (err, result) => {
+        if(err)
+        {
+            console.log(err)
+            res.json({AddStatus: 'NO'})
+        }
+        else
+        {
+            korrID = result[0].id; 
+        }
+    
+    let result2 = con.query(`INSERT INTO TASKS (name, coordynator, description) VALUES (
+        '`+req.body.newProject.Name+`',
+        '`+korrID+`',
+        '`+req.body.newProject.Desc+`'
+    )`, (err, result) => {
+         if(err)
+            {
+                console.log("ERROR: "+err)
+                res.json({AddStatus: 'NO'})
+            }
+            else
+            {
+                res.json({AddStatus: 'OK'})
+            }
 
+    })
+    })
+})
+app.get('/getKoordID', (req,res) => {
+    let login = req.body.koordynator.Login;
+    con.query(`SELECT id FROM WORKERS where login = '`+login+`'`, (err,result) => {
+        if(err)
+        {
+            console.log("ERROR: ", err)
+        }
+        else
+        {
+            res.json({KoordID: result[0].id})
+        }
+    })
+})
+let projectName = '';
+app.post('/sendProjectName', (req,res) => {
+    projectName = req.body.Project.Name;
+    res.json({Status: 'OK'})
+})
+app.get('/getProjectName', (req,res) => {
+    res.json({Name: projectName})
+})
 app.listen(300, () => {
     console.log('BACKEND | SERVER is listening on port 300');
 });

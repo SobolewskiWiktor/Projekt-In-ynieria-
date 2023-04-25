@@ -46,7 +46,7 @@ export default{
       if(this.auth == true)
         {
           this.toastService.success("Login Accept", {
-          position: "top-center",
+          position: "top-right",
           timeout: 5000,
           closeOnClick: true,
           pauseOnFocusLoss: true,
@@ -64,7 +64,7 @@ export default{
         else
         {
           this.toastService.error("Login Denied", {
-          position: "top-center",
+          position: "top-right",
           timeout: 5000,
           closeOnClick: true,
           pauseOnFocusLoss: true,
