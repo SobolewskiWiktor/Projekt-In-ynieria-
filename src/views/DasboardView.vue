@@ -55,12 +55,14 @@
                             <button id="selectOptionWarkerButtonFocus" v-if="showAddProject == 1">ADD</button>
                         </div>
                         <div id="addWorker" v-if="showAddProject == 1">
-                        <form id="formWorker">
+                        <div id="projects">
+                            <form id="formWorker">
                             <input class="inputWorker" placeholder="Name" v-model="addTaskName">
                             <input class="inputWorker" placeholder="Coordynator" v-model="addTaskKoor">
                             <input class="inputWorker" placeholder="Descripton" v-model="addTaskDesc">
                             <button id="Add" @click.prevent=" addTaskToBase() ">ADD</button>
-                        </form>
+                        </form> 
+                        </div>
                         </div>
                         <div id="showWorker" v-else>
                             <button id="Project" v-for="(projekt, index) in Projects" @click.prevent="showselect(projekt)">
