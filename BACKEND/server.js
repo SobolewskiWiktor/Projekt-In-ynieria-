@@ -6,9 +6,9 @@ const app = express();
 
 const mysql = require("mysql");
 const con = mysql.createConnection({
-    host: 'localhost',
+    host: '127.0.0.1',
     user: 'root',
-    password: 'Projekt12!',
+    password: 'sobol',
     database: 'projekt'
   })
 
@@ -136,7 +136,7 @@ app.post('/addProjectToBase',async  (req, res) => {
             korrID = result[0].id; 
         }
     
-    let result2 = con.query(`INSERT INTO TASKS (name, coordynator, description) VALUES (
+    let result2 = con.query(`INSERT INTO TASKS (name, coordinator, description) VALUES (
         '`+req.body.newProject.Name+`',
         '`+korrID+`',
         '`+req.body.newProject.Desc+`'
@@ -173,7 +173,57 @@ app.post('/sendProjectName', (req,res) => {
     res.json({Status: 'OK'})
 })
 app.get('/getProjectName', (req,res) => {
+    console.log("Przekazuje", projectName)
     res.json({Name: projectName})
+})
+app.post(`/getTaskID`, (req,res) => {
+    let name = req.body.Project.Name;
+    try
+    {
+        con.query(`SELECT id FROM tasks where name = '`+projectName+`'`, (err, result) => 
+        {
+            if(err)
+            {
+                console.log("ERROR: ", err)
+            }
+            else
+            {
+                res.json({TaskID: result[0].id})
+            }
+        })
+    }
+    catch
+    {
+        res.json({TaskID: 'NONE'})
+    }
+})
+app.post('/getAssingment', (req,res) => {
+    const id_task = req.body.Project.ID; 
+    const  name = req.body.Project.Name;
+    let assing = []; 
+    let perfor = []; 
+    con.query(`Select name, performance from assingment where id_task ='`+id_task+`'`, (err, result) => {
+        if(err)
+        {
+            console.log("ERROR", err)
+        }
+        else
+        {
+            if(result.data > 0)
+            {
+                result.forEach(elem, index, arr)  
+            {
+               assing[index] = elem.name;
+               perfor[index] = elem.performance;
+            }
+            res.json({Assingments: assing, Performance: perfor})
+            }
+            else
+            {
+                console.log("CHUJ")
+            }
+        }
+    } )
 })
 app.listen(300, () => {
     console.log('BACKEND | SERVER is listening on port 300');

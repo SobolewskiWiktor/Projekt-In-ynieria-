@@ -47,7 +47,7 @@
                 </div>
 
                 <div id="workers" v-else-if="Projects.length != 0">
-                    <div id="view" v-if="showProjectDetails == 0">
+                    <div id="view">
                         <div id="selectOptionWarker">
                             <button id="selectOptionWarkerButtonFocus" v-if="showAddProject == 0">LIST</button>
                             <button id="selectOptionWarkerButton" v-if="showAddProject == 1" @click.prevent="closeAddProject()">LIST</button>
@@ -55,24 +55,30 @@
                             <button id="selectOptionWarkerButtonFocus" v-if="showAddProject == 1">ADD</button>
                         </div>
                         <div id="addWorker" v-if="showAddProject == 1">
-                        <div id="projects">
                             <form id="formWorker">
                             <input class="inputWorker" placeholder="Name" v-model="addTaskName">
                             <input class="inputWorker" placeholder="Coordynator" v-model="addTaskKoor">
                             <input class="inputWorker" placeholder="Descripton" v-model="addTaskDesc">
                             <button id="Add" @click.prevent=" addTaskToBase() ">ADD</button>
-                        </form> 
-                        </div>
+                            </form> 
                         </div>
                         <div id="showWorker" v-else>
-                            <button id="Project" v-for="(projekt, index) in Projects" @click.prevent="showselect(projekt)">
-                            <div id="name">{{Projects[index]}}</div> 
-                            </button>
+                            <div id="projects">
+                                <button id="Project" v-for="(projekt, index) in Projects" @click.prevent="showselect(projekt)">
+                                <div id="name">{{Projects[index]}}</div> 
+                                <div id="progress">
+                                    <div class="statisticProcent2">32%</div>
+                                    <progress id="file2" value="32" max="100"></progress>
+                                </div>
+                                </button>
+                            </div>
+                            <div id="assingments">
+                                <div id="view" v-if="showProjectDetails == 1">
+                                    <AssingmentView :message="AssingmentView"></AssingmentView>
+                                    <component :is="AssingmentView"></component>
+                                </div> 
+                            </div>
                         </div>
-                    </div>
-                    <div id="view" v-else>
-                        <AssingmentView :message="AssingmentView"></AssingmentView>
-                        <component :is="AssingmentView"></component>
                     </div>
                 </div>
 
@@ -141,28 +147,13 @@ export default{
     {
         async showselect(projekt) 
         {
-            this.toastService.info(projekt, {
-                position: "top-right",
-                timeout: 5000,
-                closeOnClick: true,
-                pauseOnFocusLoss: true,
-                pauseOnHover: true,
-                draggable: true,
-                draggablePercent: 0.6,
-                showCloseButtonOnHover: false,
-                hideProgressBar: false,
-                closeButton: "button",
-                icon: true,
-                rtl: false
-                })
+            this.showProjectDetails = 0; 
                 let Project = {
                     Name : projekt,
                 }
-                let result = await axios.post("http://sobol.cloud:1808/sendProjectName", {Project})
+                let result = await axios.post("http://127.0.0.1:300/sendProjectName", {Project})
                 console.log(result); 
                 this.showProjectDetails = 1; 
-                console.log('this.showProjectDetails')
-                console.log(this.showProjectDetails)
         },
         async Home()
         {
@@ -172,7 +163,7 @@ export default{
         async getWorkers()
         {
           this.Projects = [];
-          let result = await axios.get("http://sobol.cloud:1808/getWorker");
+          let result = await axios.get("http://127.0.0.1:300/getWorker");
           console.log(result)
           result.data.Login.forEach((elem, index, arr) =>{
              this.workers[index] = elem; 
@@ -182,7 +173,7 @@ export default{
         async getProject()
         {
             this.workers = []; 
-            let result = await axios.get("http://sobol.cloud:1808/getProject");
+            let result = await axios.get("http://127.0.0.1:300/getProject");
             console.log(result)
           result.data.projekt.forEach((elem, index, arr) =>{
              this.Projects[index] = elem; 
@@ -216,7 +207,7 @@ export default{
               Password: this.addPassword,
               Type: this.addType, 
            }
-           let result = await axios.post('http://sobol.cloud:1808/addWorkerToBase', {newUser})
+           let result = await axios.post('http://127.0.0.1:300/addWorkerToBase', {newUser})
            console.log(result);
            if(result.data.AddStatus == "OK")
             {
@@ -263,7 +254,8 @@ export default{
             Koord: this.addTaskKoor,
             Desc: this.addTaskDesc
             }
-            let request = axios.post('http://sobol.cloud:1808/addProjectToBase', {newProject}); 
+            let request = await axios.post('http://127.0.0.1:300/addProjectToBase', {newProject}); 
+            console.log(request)
             if(request.data.AddStatus == "OK")
             {
                 this.toastService.success("Tillagd", {
