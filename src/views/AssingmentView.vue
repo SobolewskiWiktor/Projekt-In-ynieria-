@@ -3,7 +3,7 @@
     <div id="Assingments" v-if="showDone == 0"> 
     <button id="Assig" v-for="(assigment, index) in Assingments" @click.prevent="Done(Assingments[index])">
         <h1 id="Done" v-if="Perfor[index] == '1'">{{Assingments[index]}}</h1>
-        <h1 id="Progress">{{Assingments[index]}}</h1>
+        <h1 id="Progress" v-else>{{Assingments[index]}}</h1>
     </button>
 
   </div>
@@ -11,7 +11,7 @@
     <div id="blured">
         <button id="Assig2" v-for="(assigment, index) in Assingments" on-click="showDone()">
         <h1 id="Done2" v-if="Perfor[index] == '1'">{{Assingments[index]}}</h1>
-        <h1 id="Progress2">{{Assingments[index]}}</h1>
+        <h1 id="Progress2" v-else>{{Assingments[index]}}</h1>
     </button>
     </div>
     <div id="form">
@@ -21,7 +21,7 @@
        </div>
        <div id="formRest">
          <form id="formWorker2">
-            <input class="inputWorker" placeholder="Name" v-model="userName">
+            <input class="inputWorker" placeholder="User Name" v-model="userName">
             <input class="inputWorker" placeholder="Time" v-model="userHours">
             <button id="Add" @click.prevent=" Compelte() ">COMPLETE</button>
          </form>
@@ -114,11 +114,12 @@ export default{
             let Complete =
             {
                 AsigName: this.selectAssingment,
-                userName: this.userName,
+                userLogin: this.userName,
                 hours: this.userHours
             };
-
+            console.log('complete: ', Complete)
             const result = await axios.post("http://127.0.0.1:300/CompleteAssingment", {Complete})
+            console.log("RES: ", result)
         }
     },
 }

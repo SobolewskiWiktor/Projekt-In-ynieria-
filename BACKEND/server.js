@@ -156,6 +156,7 @@ app.post('/addProjectToBase',async  (req, res) => {
 })
 app.get('/getKoordID', (req,res) => {
     let login = req.body.koordynator.Login;
+    console.log(`SELECT id FROM WORKERS where login = '`+login+`'`)
     con.query(`SELECT id FROM WORKERS where login = '`+login+`'`, (err,result) => {
         if(err)
         {
@@ -228,6 +229,24 @@ app.post('/getAssingment', (req,res) => {
             }
         }
     } )
+})
+app.post('/CompleteAssingment', async (req,res) => {
+    const AsiName = req.body.Complete.AsigName;
+    const userName = req.body.Complete.userLogin;
+    let userID = '';
+    let hours = parseInt(req.body.Complete.hours);
+
+    let result2 = con.query(`UPDATE assingment set performance = 1, id_worker = (select id from WORKERS where login ='`+userName+`'), number_of_hours =`+hours+`  where name='`+AsiName+`'`, (err,result) => {
+        if(err)
+        {
+            console.log("ERROR", err)
+        }
+        else
+        {
+            res.json({Status: "OK"})
+        }
+    })
+    console.log('get: ', AsiName, ' ', userName, ' ', hours, ' ', userID)
 })
 app.listen(300, () => {
     console.log('BACKEND | SERVER is listening on port 300');
