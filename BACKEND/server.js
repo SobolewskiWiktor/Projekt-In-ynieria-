@@ -189,6 +189,7 @@ app.post(`/getTaskID`, (req,res) => {
             else
             {
                 res.json({TaskID: result[0].id})
+                console.log("ID task: ",result[0].id )
             }
         })
     }
@@ -198,10 +199,12 @@ app.post(`/getTaskID`, (req,res) => {
     }
 })
 app.post('/getAssingment', (req,res) => {
-    const id_task = req.body.Project.ID; 
-    const  name = req.body.Project.Name;
+    const id_task = req.body.Project2.ID; 
+    const  name = req.body.Project2.Name;
     let assing = []; 
     let perfor = []; 
+    console.log("ID: ",id_task, " name: ", name )
+    console.log( `Select name, performance from assingment where id_task ='`+id_task+`'`);
     con.query(`Select name, performance from assingment where id_task ='`+id_task+`'`, (err, result) => {
         if(err)
         {
@@ -209,18 +212,19 @@ app.post('/getAssingment', (req,res) => {
         }
         else
         {
-            if(result.data > 0)
+            console.log(result);
+            if(result.length != 0)
             {
-                result.forEach(elem, index, arr)  
-            {
-               assing[index] = elem.name;
-               perfor[index] = elem.performance;
-            }
-            res.json({Assingments: assing, Performance: perfor})
+                result.forEach((elem, index, arr) => 
+                {
+                    assing[index] = elem.name;
+                    perfor[index] = elem.performance;
+                });
+                res.json({Assingments: assing, Performance: perfor})
             }
             else
             {
-                console.log("CHUJ")
+                console.log("BRAK WYNIKU DB")
             }
         }
     } )

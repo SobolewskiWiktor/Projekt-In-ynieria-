@@ -1,0 +1,13 @@
+#Assig
+{
+    width: 400px;
+    background-color: transparent;
+    color: white;
+    font-size: 10px;
+    margin: 10px;
+    border: 1px solid #41b883;
+}
+#Assig:hover
+{
+    color: red;
+}
