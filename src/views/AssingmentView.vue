@@ -1,10 +1,33 @@
 <template>
-  <div id="Assingments">
-    <button id="Assig" v-for="(assigment, index) in Assingments">
-        <h1 id="Done" v-if="Perfor[index] == '1'">{Assingments[index]}}</h1>
+  <div id="contentAssig">
+    <div id="Assingments" v-if="showDone == 0"> 
+    <button id="Assig" v-for="(assigment, index) in Assingments" @click.prevent="Done(Assingments[index])">
+        <h1 id="Done" v-if="Perfor[index] == '1'">{{Assingments[index]}}</h1>
         <h1 id="Progress">{{Assingments[index]}}</h1>
     </button>
 
+  </div>
+  <div id="Assingments" v-else> 
+    <div id="blured">
+        <button id="Assig2" v-for="(assigment, index) in Assingments" on-click="showDone()">
+        <h1 id="Done2" v-if="Perfor[index] == '1'">{{Assingments[index]}}</h1>
+        <h1 id="Progress2">{{Assingments[index]}}</h1>
+    </button>
+    </div>
+    <div id="form">
+       <div id="formTitle">
+          <div id="formTitleText">Task completion</div>
+          <button id="close" @click.prevent="closeDone()">X</button>
+       </div>
+       <div id="formRest">
+         <form id="formWorker2">
+            <input class="inputWorker" placeholder="Name" v-model="userName">
+            <input class="inputWorker" placeholder="Time" v-model="userHours">
+            <button id="Add" @click.prevent=" Compelte() ">COMPLETE</button>
+         </form>
+       </div>
+    </div>
+  </div>
   </div>
 </template>
 
@@ -21,6 +44,10 @@ export default{
         projectID: '',
         Assingments: [],
         Perfor: [],
+        showDone: 0, 
+        userName: '',
+        userHours: '',
+        selectAssingment: '',
         }
     },
     mounted() 
@@ -70,6 +97,28 @@ export default{
             await this.getProjectName();
             await this.getTaskID();
             await this.getFullProject();
+        },
+        async Done(assingment)
+        {
+            console.log("wlaczam dodanie done")
+            this.showDone = 1; 
+            this.selectAssingment = assingment; 
+        },
+        async closeDone()
+        {
+            this.showDone = 0; 
+            this.Setup(); 
+        },
+        async Compelte()
+        {
+            let Complete =
+            {
+                AsigName: this.selectAssingment,
+                userName: this.userName,
+                hours: this.userHours
+            };
+
+            const result = await axios.post("http://127.0.0.1:300/CompleteAssingment", {Complete})
         }
     },
 }
