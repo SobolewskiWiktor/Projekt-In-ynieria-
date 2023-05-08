@@ -248,6 +248,21 @@ app.post('/CompleteAssingment', async (req,res) => {
     })
     console.log('get: ', AsiName, ' ', userName, ' ', hours, ' ', userID)
 })
+app.post('/addAssingment', async(req,res) => {
+    const name = req.body.newAssig.name;
+    const tID = req.body.newAssig.taskID;
+    con.query(`INSERT INTO assingment (name, id_task) VALUES ('`+name+`',`+tID+`)`, (err, result) => {
+        if(err)
+        {
+            console.log(err)
+            res.json({Status: "NO"})
+        }
+        else
+        {
+            res.json({Status: "OK"})
+        }
+    })
+})
 app.listen(300, () => {
     console.log('BACKEND | SERVER is listening on port 300');
 });

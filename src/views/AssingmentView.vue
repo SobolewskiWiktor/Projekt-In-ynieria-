@@ -1,5 +1,11 @@
 <template>
   <div id="contentAssig">
+    <div id="add">
+        <form id="formWorker3">
+            <input class="inputWorker" type="text" placeholder="New" v-model="newAssigName">
+            <button id="Add2" @click.prevent=" addAssingment() ">ADD</button>
+        </form>
+    </div>
     <div id="Assingments" v-if="showDone == 0"> 
     <button id="Assig" v-for="(assigment, index) in Assingments" @click.prevent="Done(Assingments[index])">
         <h1 id="Done" v-if="Perfor[index] == '1'">{{Assingments[index]}}</h1>
@@ -48,11 +54,13 @@ export default{
         userName: '',
         userHours: '',
         selectAssingment: '',
+        newAssigName: '',
         }
     },
     mounted() 
     {
          this.Setup();
+         this.toastService = useToast();
     },
     methods:
     {
@@ -120,6 +128,52 @@ export default{
             console.log('complete: ', Complete)
             const result = await axios.post("http://127.0.0.1:300/CompleteAssingment", {Complete})
             console.log("RES: ", result)
+        },
+        async addAssingment()
+        {
+            let newAssig = 
+            {
+                name: this.newAssigName,
+                taskID: this.projectID,
+            }
+            const result = await axios.post("http://127.0.0.1:300/addAssingment", {newAssig})
+            if(result.data.Status == "OK")
+            {
+                this.toastService.success("ADDED", {
+                        position: "top-right",
+                        timeout: 5000,
+                        closeOnClick: true,
+                        pauseOnFocusLoss: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        draggablePercent: 0.6,
+                        showCloseButtonOnHover: false,
+                        hideProgressBar: false,
+                        closeButton: "button",
+                        icon: true,
+                        rtl: false
+                        })
+                        this.Setup();
+            }
+            else
+            {
+                this.toastService.error("ERROR", {
+                        position: "top-right",
+                        timeout: 5000,
+                        closeOnClick: true,
+                        pauseOnFocusLoss: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        draggablePercent: 0.6,
+                        showCloseButtonOnHover: false,
+                        hideProgressBar: false,
+                        closeButton: "button",
+                        icon: true,
+                        rtl: false
+                        })
+                        this.Setup();
+            }
+            console.log("ADD RESULT", result)
         }
     },
 }
