@@ -127,7 +127,46 @@ export default{
             };
             console.log('complete: ', Complete)
             const result = await axios.post("http://127.0.0.1:300/CompleteAssingment", {Complete})
-            console.log("RES: ", result)
+            if(result.data.Status == 'OK')
+            {
+                this.toastService.success("Complete", {
+                        position: "top-right",
+                        timeout: 5000,
+                        closeOnClick: true,
+                        pauseOnFocusLoss: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        draggablePercent: 0.6,
+                        showCloseButtonOnHover: false,
+                        hideProgressBar: false,
+                        closeButton: "button",
+                        icon: true,
+                        rtl: false
+                        })
+                this.Setup();
+                this.showDone = 0; 
+            }
+            else
+            {
+                this.toastService.error("ERROR", {
+                        position: "top-right",
+                        timeout: 5000,
+                        closeOnClick: true,
+                        pauseOnFocusLoss: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        draggablePercent: 0.6,
+                        showCloseButtonOnHover: false,
+                        hideProgressBar: false,
+                        closeButton: "button",
+                        icon: true,
+                        rtl: false
+                        })
+                this.Setup();
+                this.showDone = 0;
+            }
+
+            this.Setup();
         },
         async addAssingment()
         {

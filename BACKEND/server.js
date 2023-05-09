@@ -240,6 +240,7 @@ app.post('/CompleteAssingment', async (req,res) => {
         if(err)
         {
             console.log("ERROR", err)
+            res.json({Status: "NO"})
         }
         else
         {

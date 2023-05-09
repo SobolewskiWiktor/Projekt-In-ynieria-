@@ -175,6 +175,7 @@
 {
     color:#41b883;
     cursor: pointer;
+    box-shadow: 0px 0px 24px -8px rgba(75, 134, 80, 1);
 }
 #Project
 {
