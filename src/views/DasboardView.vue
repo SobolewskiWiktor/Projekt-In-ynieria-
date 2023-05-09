@@ -65,11 +65,11 @@
                         <div id="showWorker" v-else>
                             <div id="projects">
                                 <button id="Project" v-for="(projekt, index) in Projects" @click.prevent="showselect(projekt)">
-                                <div id="name">{{Projects[index]}}</div> 
-                                <div id="progress">
-                                    <div class="statisticProcent2">32%</div>
-                                    <progress id="file2" value="32" max="100"></progress>
-                                </div>
+                                    <div id="name">{{Projects[index]}}</div> 
+                                    <div id="progress">
+                                        <div class="statisticProcent2">{{projectPercentage[projekt] +"%"}}</div>
+                                        <progress id="file2" :value="projectPercentage[projekt]" max="100"></progress>
+                                    </div>
                                 </button>
                             </div>
                             <div id="assingments">
@@ -128,6 +128,7 @@ export default{
     {
        return{
        Projects: [],
+       projectPercentage: {},
        workers: [], 
        showAddWorker: 0, 
        showAddProject:0,
@@ -140,7 +141,8 @@ export default{
        addTaskName: '',
        addTaskDesc: '',
        addTaskKoor: '',
-       TaskSelect: 'test', 
+       TaskSelect: 'test',
+       procent : '', 
        }
     },
     methods:
@@ -177,7 +179,11 @@ export default{
             console.log(result)
           result.data.projekt.forEach((elem, index, arr) =>{
              this.Projects[index] = elem; 
+             
            }); 
+           for(const p in this.Projects) {
+            await this.liczProcent(this.Projects[p]);
+           }
            console.log(this.Projects[1])
         },
         async addWorker()
@@ -293,16 +299,29 @@ export default{
                         rtl: false
                         }); 
             }
-        }
+        },
+        async liczProcent(projectName) {
+            let project = 
+            {
+                Name: projectName,
+            }
+            let result =  await axios.post('http://127.0.0.1:300/getProcent', {project}); 
+            console.log("PROCENTAGE RESULT")
+
+            this.projectPercentage[projectName] = result.data.Percent
+        },
     },
     mounted()
     {
         this.toastService = useToast();
     },
+    computed: {
+        
+    },
     components: 
     {
         AssingmentView,
-    }
+    },
 }
 
 </script>

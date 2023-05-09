@@ -263,6 +263,53 @@ app.post('/addAssingment', async(req,res) => {
         }
     })
 })
+app.post('/getProcent', (req,res) => {
+    let projectName = req.body.project.Name; 
+    let all = 0;
+    let done = 0; 
+    con.query(`SELECT id, performance FROM assingment where id_task = (SELECT id from tasks where name = '`+projectName+`' )`, (err, result) => {
+        if(err)
+        {
+            console.log(err)
+        }
+        else
+        {
+            result.forEach((elem, index, arr) =>
+            {
+                 if(elem.performance == 1)
+                 {
+                    all = all + 1;
+                    done = done + 1;
+                 }
+                 else
+                 {
+                    all = all + 1; 
+                 }
+            })
+            console.log("BACK | ", all)
+            console.log("BACK | ", done)
+            let percentage =0; 
+            if(done > 0 && all > 0)
+            {
+                percentage = Math.floor((done/all)*100);
+            }
+            else
+            {
+                percentage = "BRAK"
+            }
+            console.log("BACK | perc ", percentage)
+            if(typeof percentage === "number")
+            {
+                res.json({Percent: percentage});
+            }
+            else
+            {
+                console.log("BACK| retunr 0")
+                res.json({Percent: "0"});
+            }
+        }
+    })
+})
 app.listen(300, () => {
     console.log('BACKEND | SERVER is listening on port 300');
 });
