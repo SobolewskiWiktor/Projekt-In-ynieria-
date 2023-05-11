@@ -9,7 +9,7 @@
          </div>
     </div>
     <div id="workerDetailProjects">
-        
+
     </div>
 </div>
 </template>
@@ -27,6 +27,7 @@ export default{
            userLogin: '',
            userSurname: '',
            userType: '',
+           userID: '',
            userTasks:[],
            userProjects: [],
         }
@@ -54,10 +55,19 @@ export default{
          this.userType = result.data.Type;
 
        },
+       async getWorkerID()
+       {
+         let User = {
+            Name: this.userLogin,
+         }
+         let result = await axios.post(`http://127.0.0.1:300/getUserID`, {User})
+         this.userID = result.data.userID; 
+       },
        async setup()
        {
            await this.getWorker();
            await this.getWorkerName(); 
+           await this.getWorkerID();
        }
     },
 }

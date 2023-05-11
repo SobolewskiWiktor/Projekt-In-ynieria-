@@ -341,6 +341,21 @@ app.post('/getNameSurname', (req,res) => {
         
     })
 })
+app.post('/getUserID', (req,res) => {
+  let login = req.body.User.Name;
+  let id = '';
+  con.query(`select id from workers where login = '`+login+`'`,(err, result) => {
+    if(err)
+    {
+        console.log(err)
+    }
+    else
+    { 
+          id = result[0].id;
+          res.json({userID: id})
+    }
+  })
+})
 app.listen(300, () => {
     console.log('BACKEND | SERVER is listening on port 300');
 });
