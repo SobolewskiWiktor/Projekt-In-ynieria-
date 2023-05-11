@@ -2,7 +2,7 @@
     <div id="content">
         <div id="contentLeft">
             <div id="contentleftTop">
-                <h1>TaskMate</h1>
+                <h1>BiedaJira</h1>
             </div>
             <div id="contentLeftRest">
                 <button class="contentbarSelected" @click.prevent="Home" v-if="workers.length == 0 &&Projects.length == 0 ">Home</button>
@@ -39,10 +39,24 @@
                        </form>
                     </div>
                     <div id="showWorker" v-else>
-                        <button id="worker" v-for="(worker, index) in workers">
-                            <img id="workerImg" src="../components/icons/man.png">
-                            <div id="name">{{workers[index]}}</div> 
-                        </button>
+                        <div id="list">
+                            <div id="listSerch">
+                                <form id="formWorker">
+                            <input class="inputWorker" placeholder="Name" v-model="addTaskName">
+                            </form>
+                            </div>
+                            <div id="listList">
+                                <button id="worker" v-for="(worker, index) in workers" @click.prev
+                                ="showWorkerDetail()">
+                                <img id="workerImg" src="../components/icons/man.png">
+                                <div id="name">{{workers[index]}}</div> 
+                            </button>
+                            </div>
+                        </div>
+                        <div id="details">
+                            <WorkerDetailsView :message="WorkerDetailsView"></WorkerDetailsView>
+                                    <component :is="WorkerDetailsView"></component>
+                        </div>
                     </div>
                 </div>
 
@@ -123,6 +137,7 @@ import { useToast } from "vue-toastification"
 import axios from 'axios'
 import { RouterView, RouterLink } from 'vue-router';
 import AssingmentView from '@/views/AssingmentView.vue'
+import WorkerDetailsView from '@/views/WorkerDetailView.vue'
 export default{
     data()
     {
@@ -310,6 +325,10 @@ export default{
 
             this.projectPercentage[projectName] = result.data.Percent
         },
+        showWorkerDetail()
+        {
+
+        },
     },
     mounted()
     {
@@ -321,6 +340,7 @@ export default{
     components: 
     {
         AssingmentView,
+        WorkerDetailsView,
     },
 }
 

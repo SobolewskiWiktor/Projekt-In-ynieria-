@@ -298,6 +298,19 @@
     border: 2px solid white;
     transition-duration: 400ms;
 }
+#list
+{
+    display: flex;
+    flex-direction: column;
+}
+#listList
+{
+    margin-top:15px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
 #Add:hover
 {
     color: #41b883;
@@ -309,7 +322,13 @@
     width: 100%;
     height: 100%;
     display: flex;
+    flex-direction: row;
     animation: outerLeft 2s;
+}
+#details
+{
+    width: 100%;
+    height: 1005;
 }
 #addWorker
 {
