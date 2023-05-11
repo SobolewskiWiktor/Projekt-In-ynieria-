@@ -53,7 +53,7 @@
                             </button>
                             </div>
                         </div>
-                        <div id="details">
+                        <div id="details" v-if="showWorker == 1">
                             <WorkerDetailsView :message="WorkerDetailsView"></WorkerDetailsView>
                                     <component :is="WorkerDetailsView"></component>
                         </div>
@@ -158,6 +158,7 @@ export default{
        addTaskKoor: '',
        TaskSelect: 'test',
        procent : '', 
+       showWorker: 0, 
        }
     },
     methods:
@@ -325,9 +326,14 @@ export default{
 
             this.projectPercentage[projectName] = result.data.Percent
         },
-        showWorkerDetail()
+        async showWorkerDetail(name)
         {
-
+            this.showWorker = 0; 
+            let User = {
+                Name: name,
+            }
+            let result = await axios.post('http://127.0.0.1:300/sendUser', {User})  
+            this.showWorker = 1;
         },
     },
     mounted()

@@ -311,6 +311,14 @@ app.post('/getProcent', (req,res) => {
         }
     })
 })
+
+let UserName
+app.post('/sendUser', (req,res) => {
+    UserName = req.body.User.Name; 
+})
+app.get('/getUser', (req,res) => {
+    res.json({Name: UserName}); 
+})
 app.listen(300, () => {
     console.log('BACKEND | SERVER is listening on port 300');
 });
