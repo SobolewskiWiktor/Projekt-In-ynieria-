@@ -314,7 +314,10 @@ app.post('/getProcent', (req,res) => {
 
 let UserName
 app.post('/sendUser', (req,res) => {
+    console.log("pobrałem: ", req.body.User.Name)
     UserName = req.body.User.Name; 
+    res.json({Status: "OK"})
+    console.log("wyslalem json")
 })
 app.get('/getUser', (req,res) => {
     res.json({Name: UserName}); 

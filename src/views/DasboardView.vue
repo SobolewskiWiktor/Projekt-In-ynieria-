@@ -47,7 +47,7 @@
                             </div>
                             <div id="listList">
                                 <button id="worker" v-for="(worker, index) in workers" @click.prev
-                                ="showWorkerDetail()">
+                                ="showWorkerDetail(workers[index])">
                                 <img id="workerImg" src="../components/icons/man.png">
                                 <div id="name">{{workers[index]}}</div> 
                             </button>
@@ -328,11 +328,13 @@ export default{
         },
         async showWorkerDetail(name)
         {
+            console.log("W funkcji: ", name)
             this.showWorker = 0; 
             let User = {
                 Name: name,
             }
             let result = await axios.post('http://127.0.0.1:300/sendUser', {User})  
+            console.log(result)
             this.showWorker = 1;
         },
     },

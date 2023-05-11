@@ -157,6 +157,7 @@
 }
 #worker
 {
+    margin-top: 10px;
     margin-left: 15px;
     width: 200px;
     height: 60px;
@@ -309,7 +310,8 @@
     width: 100%;
     display: flex;
     justify-content: center;
-    flex-wrap: wrap;
+    align-items: center;
+    flex-direction: column;
 }
 #Add:hover
 {
