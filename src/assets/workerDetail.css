@@ -5,3 +5,22 @@
     display: flex;
     justify-content: center;
 }
+#workerDetailTitle
+{
+    width: 100%;
+    display: flex;
+    justify-self: flex-start;
+    flex-direction: column;
+}
+#workerName
+{
+    font-size: 35px !important;
+    letter-spacing: 2px;
+}
+#workerType
+{
+    margin-left: 15px;
+    font-size: 20px !important;
+    letter-spacing: 1px;
+    color: #41b883;
+}

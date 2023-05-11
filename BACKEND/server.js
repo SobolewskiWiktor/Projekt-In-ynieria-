@@ -314,13 +314,32 @@ app.post('/getProcent', (req,res) => {
 
 let UserName
 app.post('/sendUser', (req,res) => {
-    console.log("pobrałem: ", req.body.User.Name)
     UserName = req.body.User.Name; 
     res.json({Status: "OK"})
-    console.log("wyslalem json")
 })
 app.get('/getUser', (req,res) => {
     res.json({Name: UserName}); 
+})
+app.post('/getNameSurname', (req,res) => {
+    let name = '';
+    let surname = '';
+    let type = '';
+    let login = req.body.User2.Name;
+    con.query(`select name, surname, type from workers where login = '`+login+`'`, (err, result) => {
+        if(err)
+        {
+            console.log(err)
+        }
+        else
+        {
+            name = result[0].name;
+            surname = result[0].surname;
+            type = result[0].type;
+            console.log("N ", name, " S ", surname, " T ", type)
+            res.json({Name: name, Surname: surname, Type: type})
+        }
+        
+    })
 })
 app.listen(300, () => {
     console.log('BACKEND | SERVER is listening on port 300');
