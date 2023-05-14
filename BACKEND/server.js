@@ -85,6 +85,13 @@ app.get("/getWorker", (req,res) => {
 
 app.post("/addWorkerToBase", (req,res) => 
     {
+        console.log(`INSERT INTO WORKERS (name, surname, login, password, type) VALUES (
+            '`+req.body.newUser.Name+`',
+            '`+req.body.newUser.Surname+`',
+            '`+req.body.newUser.Login+`',
+            '`+req.body.newUser.Password+`',
+            '`+req.body.newUser.Type+`'
+        )`)
         con.query(`INSERT INTO WORKERS (name, surname, login, password, type) VALUES (
             '`+req.body.newUser.Name+`',
             '`+req.body.newUser.Surname+`',
@@ -355,6 +362,50 @@ app.post('/getUserID', (req,res) => {
           res.json({userID: id})
     }
   })
+})
+app.post(`/getAllProject`, (req,res) => {
+    con.query(`select * from tasks`, (err,result) => 
+    {
+        if(err)
+        {
+            console.log(err)
+        }
+        else
+        {
+            let projects =[];
+            result.forEach((elem, index, arr) => 
+            {
+                let temp = [];
+                temp[0] = elem.name
+                temp[1] = elem.id 
+                projects[index] = temp
+            })
+            res.json({Projects: projects})
+        }
+    })
+})
+
+app.post(`/getAllAssingment`, (req,res) => {
+    let uid = req.body.Data.userID
+    con.query (`select * from assingment where id_worker = `+uid, (err,result) =>{
+        if(err)
+        {
+            console.log(err)
+        }
+        else
+        {
+            let assig = [];
+            result.forEach((elem, index, arr) => {
+                let temp = [];
+                temp[0] = elem.name
+                temp[1] = elem.id_task
+                temp[2] = elem.number_of_hours
+                assig[index] = temp;
+            })
+            res.json({assig: assig})
+        }
+
+    })
 })
 app.listen(300, () => {
     console.log('BACKEND | SERVER is listening on port 300');
