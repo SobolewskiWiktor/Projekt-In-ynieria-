@@ -33,7 +33,7 @@
                          <input class="inputWorker" placeholder="Name" v-model="addName">
                          <input class="inputWorker" placeholder="Surname" v-model="addSurname">
                          <input class="inputWorker" placeholder="Login" v-model="addLogin">
-                         <input class="inputWorker" placeholder="Password" v-model="addPassword">
+                         <input type="password" class="inputWorker" placeholder="Password" v-model="addPassword">
                          <input class="inputWorker" placeholder="Type" v-model="addType">
                          <button id="Add" @click.prevent="AddWorkerToBase()">ADD</button>
                        </form>
@@ -42,14 +42,14 @@
                         <div id="list">
                             <div id="listSerch">
                                 <form id="formWorker">
-                            <input class="inputWorker" placeholder="Name" v-model="addTaskName">
+                            <input class="inputWorker" placeholder="Name" v-model="serch">
                             </form>
                             </div>
                             <div id="listList">
-                                <button id="worker" v-for="(worker, index) in workers" @click.prev
-                                ="showWorkerDetail(workers[index])">
+                                <button id="worker" v-for="(worker, index) in filterWorker" @click.prev
+                                ="showWorkerDetail(filterWorker[index])">
                                 <img id="workerImg" src="../components/icons/man.png">
-                                <div id="name">{{workers[index]}}</div> 
+                                <div id="name">{{filterWorker[index]}}</div> 
                             </button>
                             </div>
                         </div>
@@ -159,6 +159,8 @@ export default{
        TaskSelect: 'test',
        procent : '', 
        showWorker: 0, 
+       filtredWorkers: [],
+       serch: '', 
        }
     },
     methods:
@@ -187,6 +189,7 @@ export default{
              this.workers[index] = elem; 
            }); 
            console.log(this.workers[1])
+           this.filtredWorkers = this.workers;
         },
         async getProject()
         {
@@ -343,7 +346,48 @@ export default{
         this.toastService = useToast();
     },
     computed: {
-        
+        filterWorker(){
+            console.log("start this.serch")
+            let temp = []; 
+            let i=0; 
+            let check = 0;
+            this.workers.forEach((elem, index, arr) => {
+                //console.log("filter elem", elem)
+                //console.log("serch: ", this.serch)
+                for(let y=0; y<this.serch.length; y++)
+                {
+                    if(elem[y] == this.serch[y] || this.serch == '')
+                    {
+                        temp[i] = elem
+                        check = 1;
+                    }
+                    else
+                    {
+                        break; 
+                    }
+                }
+                if(check == 1)
+                {
+                    i= i + 1;
+                }
+                if(this.serch == '')
+                    {
+                        temp[i] = elem
+                        i= i + 1;
+                    }
+            })
+            console.log("temp filter", temp)
+            if(temp.length == 0)
+                {
+                    temp[0] = "BRAK"
+                    return temp;
+                }
+                else
+                {
+                    return temp;
+                }
+             
+        }
     },
     components: 
     {
