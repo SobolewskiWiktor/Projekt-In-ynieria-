@@ -407,6 +407,26 @@ app.post(`/getAllAssingment`, (req,res) => {
 
     })
 })
+app.get(`/getHoleAssingment`, (req, res) => {
+    con.query(`select * from assingment`, (err, result) => {
+    if(err)
+    {
+        console.log(err)
+    }
+    else
+    {
+        let temp2 = []; 
+        result.forEach((elem, index, arr) => 
+        {
+            let temp = []; 
+            temp[0] = elem.name
+            temp[1] = elem.id_worker
+            temp2[index] = temp;
+        })
+        res.json({All: temp2})
+    }
+    })
+} )
 app.listen(300, () => {
     console.log('BACKEND | SERVER is listening on port 300');
 });
