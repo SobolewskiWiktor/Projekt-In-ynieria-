@@ -12,7 +12,7 @@
          <div id="Proejct" v-for="(project, index) in userProjects">
             {{userProjects[index][0]}}
              <div id="AssigName" v-for="(assig, index2) in userAssingments">
-               <div id="contentAssig" v-if="userAssingments[index2][1] == userProjects[index][1]" >
+               <div id="contentAssig2" v-if="userAssingments[index2][1] == userProjects[index][1]" >
                   <div id="contentAssigImg"></div>
                   <div id="contentAssigText">
                      <div id="contentAssigTextTitle">{{userAssingments[index2][0]}}</div>
