@@ -96,34 +96,79 @@
                     </div>
                 </div>
 
-                <div id="workers" v-else>
-                    <div class="panel">
-                        <div class="statisctic">
-                            <div class="panelTop"> <h1>Perform</h1></div>
-                            <div class="panelRest">
-                                <div class="statisticProcent">32%</div>
-                                <progress id="file" value="32" max="100"></progress> 
+                <div id="workers2" v-else>
+                    <h1>Total</h1>
+                    <div id="chartrow">
+                        <div id="chart">
+                            <div id="chartTitle">Projects</div>
+                            <div class="panel">
+                            <apexchart
+                            width="600"
+                            type="area"
+                            :options="chartOptions"
+                            :series="series"
+                            ></apexchart>
                             </div>
                         </div>
-                    </div>
-                    <div class="panel">
-                        <div class="statisctic">
-                            <div class="panelTop"> <h1>In Progress</h1></div>
-                            <div class="panelRest">
-                                <div class="statisticProcent">32%</div>
-                                <progress id="file" value="32" max="100"></progress> 
+                        <div id="chart">
+                            <div id="chartTitle">Assingments</div>
+                            <div class="panel">
+                            <apexchart
+                            width="600"
+                            type="bar"
+                            :options="chartOptions"
+                            :series="series"
+                            ></apexchart>
                             </div>
                         </div>
-                    </div>
-                    <div class="panel">
-                        <div class="statisctic">
-                            <div class="panelTop"> <h1>Done</h1></div>
-                            <div class="panelRest">
-                                <div class="statisticProcent">32%</div>
-                                <progress id="file" value="32" max="100"></progress> 
+                        <div id="chart">
+                            <div id="chartTitle">Hours</div>
+                            <div class="panel">
+                            <apexchart
+                            width="600"
+                            type="line"
+                            :options="chartOptions"
+                            :series="series"
+                            ></apexchart>
                             </div>
                         </div>
-                    </div>
+                   </div>
+                   <h1>Per User</h1>
+                   <div id="chartrow">
+                        <div id="chart">
+                            <div id="chartTitle">Projects</div>
+                            <div class="panel">
+                            <apexchart
+                            width="600"
+                            type="scatter"
+                            :options="chartOptions"
+                            :series="series"
+                            ></apexchart>
+                            </div>
+                        </div>
+                        <div id="chart">
+                            <div id="chartTitle">Assingments</div>
+                            <div class="panel">
+                            <apexchart
+                            width="600"
+                            type="bar"
+                            :options="chartOptions"
+                            :series="series"
+                            ></apexchart>
+                            </div>
+                        </div>
+                        <div id="chart">
+                            <div id="chartTitle">Hours</div>
+                            <div class="panel">
+                            <apexchart
+                            width="600"
+                            type="area"
+                            :options="chartOptions"
+                            :series="series"
+                            ></apexchart>
+                            </div>
+                        </div>
+                   </div>
                 </div>
 
             </div>
@@ -160,7 +205,22 @@ export default{
        procent : '', 
        showWorker: 0, 
        filtredWorkers: [],
-       serch: '', 
+       serch: '',
+
+       chartOptions: {
+        chart: {
+          id: "vuechart-example",
+        },
+        xaxis: {
+          categories: [],
+        },
+      },
+      series: [
+        {
+          name: "series-1",
+          data: [10,80,29,9,10,77,19,100,75,44,14],
+        }, 
+    ]
        }
     },
     methods:
@@ -340,10 +400,18 @@ export default{
             console.log(result)
             this.showWorker = 1;
         },
+        async countMointh() 
+        {
+         for(let i=1 ; i<=12; i++)
+         {
+            this.chartOptions.xaxis.categories.push(i);
+         }
+        },
     },
     mounted()
     {
         this.toastService = useToast();
+        this.countMointh(); 
     },
     computed: {
         filterWorker(){

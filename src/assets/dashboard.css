@@ -219,13 +219,7 @@
 
 
 
-.panel
-{
- margin-left: 15px;
- width: 500px;
- height: 250px;
- border: 1px solid #41b883;
-}
+
 .statisctic
 {
     width: 100%;
@@ -437,4 +431,35 @@
   {
     0% {opacity: 0;}
     100% {opacity: 1;}
+  }
+  #workers2
+  {
+    padding: 20px;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+  }
+  #chart
+  {
+    width: auto;
+    display: flex;
+    flex-direction: column;
+  }
+  #chartTitle
+  {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 25px;
+    letter-spacing: 2px;
+  }
+  #chartrow
+  {
+    width: 100%;
+    display: flex;
+    margin-top: 15px;
+    flex-direction: row;
   }
