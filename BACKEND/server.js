@@ -240,10 +240,11 @@ app.post('/getAssingment', (req,res) => {
 app.post('/CompleteAssingment', async (req,res) => {
     const AsiName = req.body.Complete.AsigName;
     const userName = req.body.Complete.userLogin;
+    let date  = req.body.Complete.date
     let userID = '';
     let hours = parseInt(req.body.Complete.hours);
-
-    let result2 = con.query(`UPDATE assingment set performance = 1, id_worker = (select id from WORKERS where login ='`+userName+`'), number_of_hours =`+hours+`  where name='`+AsiName+`'`, (err,result) => {
+    console.log(`UPDATE assingment set date_of_complete = '`+date+`',  performance = 1, id_worker = (select id from WORKERS where login ='`+userName+`'), number_of_hours =`+hours+`  where name='`+AsiName+`'`)
+    let result2 = con.query(`UPDATE assingment set date_of_complete = '`+date+`',  performance = 1, id_worker = (select id from WORKERS where login ='`+userName+`'), number_of_hours =`+hours+`  where name='`+AsiName+`'`, (err,result) => {
         if(err)
         {
             console.log("ERROR", err)
@@ -254,7 +255,7 @@ app.post('/CompleteAssingment', async (req,res) => {
             res.json({Status: "OK"})
         }
     })
-    console.log('get: ', AsiName, ' ', userName, ' ', hours, ' ', userID)
+    //console.log('get: ', AsiName, ' ', userName, ' ', hours, ' ', userID)
 })
 app.post('/addAssingment', async(req,res) => {
     const name = req.body.newAssig.name;
@@ -386,8 +387,25 @@ app.post(`/getAllProject`, (req,res) => {
 })
 
 app.post(`/getAllAssingment`, (req,res) => {
+    let monthName = req.body.Data.Month
+    const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', ' August', 'September', 'October', 'November', 'December'];
+    let monthNumber = ''; 
+    months.forEach((elem, index, arr) => {
+        if(elem == monthName)
+        {
+            if(index + 1 < 10)
+            {
+                monthNumber = "0" + (index + 1);
+            } 
+            else
+            {
+                monthNumber = (index + 1);
+            }
+        }
+    })
+    console.log("month number: ", monthNumber)
     let uid = req.body.Data.userID
-    con.query (`select * from assingment where id_worker = `+uid, (err,result) =>{
+    con.query (`select * from assingment where id_worker = `+uid+` and date_of_complete between '2023-`+monthNumber+`-01' and '2023-`+monthNumber+`-31'`, (err,result) =>{
         if(err)
         {
             console.log(err)
@@ -396,10 +414,14 @@ app.post(`/getAllAssingment`, (req,res) => {
         {
             let assig = [];
             result.forEach((elem, index, arr) => {
+                let tempdate = new Date(elem.date_of_complete)
+                console.log(tempdate.toISOString().slice(0, 10))
+                let date = tempdate.toISOString().slice(0, 10)
                 let temp = [];
                 temp[0] = elem.name
                 temp[1] = elem.id_task
                 temp[2] = elem.number_of_hours
+                temp[3] = date
                 assig[index] = temp;
             })
             res.json({assig: assig})
