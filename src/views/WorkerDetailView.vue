@@ -8,6 +8,17 @@
             {{this.userType}}
          </div>
     </div>
+    <div id="wokrerDetailMonth">
+      <div id="Title">
+         <h1>Month</h1>
+      </div>
+      <div id="workerDetailsMonthConent">
+         <div id="mohtBurrons" v-for="(Month, index) in months">
+            <button id="MonthButton" v-if="months[index] != currentMonth" @click.prevent="setupByMonth(months[index])">{{months[index]}} </button>
+            <button id="MonthButtonCurrent" v-else @click.prevent="setupByMonth(months[index])">{{months[index]}} </button>
+         </div>
+      </div>
+    </div>
     <div id="workerDetailProjects">
       <div id="statistic">
          <div id="title">Details</div>
@@ -18,7 +29,7 @@
                   <img id="staticHourImg" src="@/assets/clock.png"/>
                 </div>
                 <div id="staticHourAmmount">
-                   {{this.userHours}} / 168
+                   {{this.userHours}} h
                 </div>
              </div>
              <div id="statisticHour">
@@ -42,13 +53,14 @@
           </div>
       </div>
          <div id="Proejct" v-for="(project, index) in userProjects">
-            {{userProjects[index][0]}}
+            {{userProjects[index][0]}} - {{projectHours[parseInt(userProjects[index][1])]}} h
              <div id="AssigName" v-for="(assig, index2) in userAssingments">
                <div id="contentAssig2" v-if="userAssingments[index2][1] == userProjects[index][1]" >
                   <div id="contentAssigImg"></div>
                   <div id="contentAssigText">
                      <div id="contentAssigTextTitle">{{userAssingments[index2][0]}}</div>
-                     <div id="contentAssigHours">{{userAssingments[index2][2]}} H</div>
+                     <div id="contentAssigHours">{{userAssingments[index2][2]}} h</div>
+                     <div id="contentAssigDate">{{userAssingments[index2][3]}}</div>
                   </div>
                </div>
             </div>
@@ -78,6 +90,9 @@ export default{
            allProjects: '', 
            userAssingmentsAmmount: '', 
            allAssingments: '', 
+           projectHours: [], 
+           months: ['January', 'February', 'March', 'April', 'May', 'June', 'July', ' August', 'September', 'October', 'November', 'December'],
+           currentMonth: 'May', 
         }
     },
     mounted() 
@@ -121,6 +136,7 @@ export default{
          let projectsAmmount = 0; 
                  let Data = {
                   userID: this.userID,
+                  Month: this.currentMonth,
                  }
             let result = await axios.post(`http://127.0.0.1:300/getAllProject`, {Data})
             result.data.Projects.forEach((elem, index, arr) => {
@@ -143,12 +159,10 @@ export default{
                   userProjects = userProjects + 1;
                }
             })
-            console.log("User Projects Ammount: ", userProjects)
-            console.log("Projects Arr: ", projectWithAssingment)
-            console.log("Assig arr: ", assingment)
             this.userProjects = projectWithAssingment;
             this.userAssingments = assingment;
             this.userProjectsAmmount = userProjects;
+            console.log("Assig:", this.userAssingments)
          },
          async getHours()
          {
@@ -165,10 +179,8 @@ export default{
             let allAssingments =0;
             let userAssingments = 0;  
             let result = await axios.get('http://127.0.0.1:300/getHoleAssingment')
-            console.log("CHUJ: ", result)
             result.data.All.forEach((elem, index, arr) => {
                   allAssingments = allAssingments + 1;
-                  console.log("HCUJ2: ", elem[1])
                   if(elem[1] == this.userID)
                   {
                      userAssingments = userAssingments + 1;
@@ -176,9 +188,44 @@ export default{
             })
             this.userAssingmentsAmmount = userAssingments;
             this.allAssingments = allAssingments; 
-
+         },
+         async coutProjectHours()
+         {
+           var hours = 0; 
+           this.userProjects.forEach((elem, idex, arr) => {
+               this.userAssingments.forEach((elem2, index2, arr2) => {
+                  if(elem[1] == elem2[1])
+                  { 
+                     hours = hours + parseInt(elem2[2])
+                  }
+               })
+               this.projectHours[elem[1]] = hours;
+               hours = 0; 
+           })
+         },
+         async setCurrentMonth()
+         {
+           let currentMonth = new Date();
+           let currentMonthFixed = currentMonth.getMonth()
+           this.currentMonth = this.months[currentMonthFixed]
+         },
+         async setupByMonth(month)
+         {
+             this.currentMonth = month; 
+             await this.setup2();
          },
        async setup()
+       {
+         await this.setCurrentMonth();
+           await this.getWorker();
+           await this.getWorkerName(); 
+           await this.getWorkerID();
+           await this.getAllProject();
+           await this.getHours(); 
+           await this.getHoleAssingments(); 
+           await this.coutProjectHours(); 
+       },
+       async setup2()
        {
            await this.getWorker();
            await this.getWorkerName(); 
@@ -186,6 +233,7 @@ export default{
            await this.getAllProject();
            await this.getHours(); 
            await this.getHoleAssingments(); 
+           await this.coutProjectHours(); 
        }
     },
 }

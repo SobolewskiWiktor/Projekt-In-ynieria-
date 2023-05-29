@@ -105,8 +105,8 @@
                             <apexchart
                             width="600"
                             type="area"
-                            :options="chartOptions"
-                            :series="series"
+                            :options="chartOptionsMonth"
+                            :series="seriesProjects"
                             ></apexchart>
                             </div>
                         </div>
@@ -115,8 +115,8 @@
                             <div class="panel">
                             <apexchart
                             width="600"
-                            type="bar"
-                            :options="chartOptions"
+                            type="area"
+                            :options="chartOptionsMonth"
                             :series="series"
                             ></apexchart>
                             </div>
@@ -126,9 +126,9 @@
                             <div class="panel">
                             <apexchart
                             width="600"
-                            type="line"
-                            :options="chartOptions"
-                            :series="series"
+                            type="area"
+                            :options="chartOptionsMonth"
+                            :series="seriesHours"
                             ></apexchart>
                             </div>
                         </div>
@@ -140,9 +140,9 @@
                             <div class="panel">
                             <apexchart
                             width="600"
-                            type="scatter"
-                            :options="chartOptions"
-                            :series="series"
+                            type="area"
+                            :options="chartOptionsUsers"
+                            :series="seriesUsersProjects"
                             ></apexchart>
                             </div>
                         </div>
@@ -151,9 +151,9 @@
                             <div class="panel">
                             <apexchart
                             width="600"
-                            type="bar"
-                            :options="chartOptions"
-                            :series="series"
+                            type="area"
+                            :options="chartOptionsUsers"
+                            :series="seriesUsersAsig"
                             ></apexchart>
                             </div>
                         </div>
@@ -163,8 +163,8 @@
                             <apexchart
                             width="600"
                             type="area"
-                            :options="chartOptions"
-                            :series="series"
+                            :options="chartOptionsUsers"
+                            :series="seriesUsersHours"
                             ></apexchart>
                             </div>
                         </div>
@@ -183,6 +183,7 @@ import axios from 'axios'
 import { RouterView, RouterLink } from 'vue-router';
 import AssingmentView from '@/views/AssingmentView.vue'
 import WorkerDetailsView from '@/views/WorkerDetailView.vue'
+import { withScopeId } from 'vue';
 export default{
     data()
     {
@@ -207,7 +208,7 @@ export default{
        filtredWorkers: [],
        serch: '',
 
-       chartOptions: {
+       chartOptionsMonth: {
         chart: {
           id: "vuechart-example",
         },
@@ -215,16 +216,192 @@ export default{
           categories: [],
         },
       },
+      chartOptionsUsers: {
+        chart: {
+          id: "vuechart-users",
+        },
+        xaxis: {
+            type: 'category',
+          categories: [""],
+        },
+      },
       series: [
-        {
-          name: "series-1",
-          data: [10,80,29,9,10,77,19,100,75,44,14],
-        }, 
-    ]
+            {
+            name: "series-1",
+            data: [],
+            }, 
+        ],
+        seriesHours: [
+            {
+            name: "series-1",
+            data: [],
+            },     
+        ],
+        seriesProjects: [
+            {
+            name: "series-1",
+            data: [],
+            },     
+        ],
+        seriesUsersProjects: [
+            {
+            name: "series-1",
+            data: [],
+            },     
+        ],
+        seriesUsersAsig: [
+            {
+            name: "series-1",
+            data: [],
+            },     
+        ],
+        seriesUsersHours: [
+            {
+            name: "series-1",
+            data: [],
+            },     
+        ],
        }
     },
     methods:
     {
+        async getUsersDataForDiagrams()
+        {
+            let tempUsersNames = []; 
+            let users = await axios.get("http://127.0.0.1:300/getUsersList")
+            users.data.Users.forEach((elem, index, arr) => {
+                tempUsersNames[index] = elem[1];
+            })
+            console.log("names: ", tempUsersNames)
+            this.chartOptionsUsers.xaxis.categories.pop()
+            tempUsersNames.forEach((elem, index, arr) => {
+                this.chartOptionsUsers.xaxis.categories.push(elem)
+                console.log("dodaje: ", elem)
+            })
+            console.log("hartOptionsUsers: ",this.chartOptionsUsers.xaxis.categories)
+            console.log("chartOptionsMonth: ",this.chartOptionsMonth.xaxis.categories)
+
+            let tempUserProjectAmmount = []
+            let tempUserAssigAmmount = []
+            let tempUserHoursAmmount = []
+            let tempProjects = await axios.get("http://127.0.0.1:300/getProjectsData");
+            console.log(tempProjects)
+            let resultAssig = await axios.get("http://127.0.0.1:300/getAssingmentData");
+ 
+                users.data.Users.forEach((elem, index, arr) => {
+                    let tempCounterAssig = 0;
+                    let tempCounterHours = 0;
+                    resultAssig.data.Assingments.forEach((elemT, indexT, arrT) => {
+                        let tempDate = new Date(elemT[3]);
+                        let tempMonth = tempDate.getMonth() + 1;
+                        let tempCurDate = new Date();
+                        let tempCurMonth = tempCurDate.getMonth() + 1; 
+                        if(tempCurMonth == tempMonth)
+                        {
+                            if(elemT[2] == elem[0])
+                            {
+                                tempCounterAssig += 1;
+                                tempCounterHours += parseInt(elemT[4]);
+                            }
+                        }
+                    })
+                    tempUserAssigAmmount[index] = tempCounterAssig;
+                    tempUserHoursAmmount[index] = tempCounterHours;
+                })
+
+                users.data.Users.forEach((elem, index, arr) => {
+                    let tempCounterProject =0; 
+                    tempProjects.data.Projects.forEach((elemT, indexT, arrT) => {
+                        let check =0; 
+                       resultAssig.data.Assingments.forEach((elemF, indexF, arrF) => {
+                            let tempDate = new Date(elemF[3]);
+                            let tempMonth = tempDate.getMonth() + 1;
+                            let tempCurDate = new Date();
+                            let tempCurMonth = tempCurDate.getMonth() + 1; 
+                            if(tempCurMonth == tempMonth)
+                            {
+                                if(elemF[1] == elem[0])
+                                {
+                                    if(elemF[1] == elemT[0])
+                                    {
+                                        check = 1;
+                                    }
+                                }
+                            }
+                       })
+                       tempCounterProject += 1;
+                    })
+                    tempUserProjectAmmount[index] = tempCounterProject;
+                })
+                this.seriesUsersProjects[0].data = tempUserProjectAmmount;
+                this.seriesUsersAsig[0].data = tempUserAssigAmmount;
+                this.seriesUsersHours[0].data = tempUserHoursAmmount;
+        },
+        async getDataForMonthsDiagrams()
+        {
+            console.log("MID | POBIERAM DANE DO WYKRESOW");
+              let tempProjects = await axios.get("http://127.0.0.1:300/getProjectsData")
+              let tempProject = tempProjects.data.Projects;
+
+              let tempCoutedHours = [];
+              let tempCountedAmmountOfProjects = []; 
+              let tempCountedAmmountOfAssingments = [];
+              let CheckProject = 0; 
+              let resultAssig = await axios.get("http://127.0.0.1:300/getAssingmentData")
+              let tempAssig = resultAssig.data.Assingments;
+              //console.log("Assingments: ", tempAssig) 
+             for(let i=0; i<12; i++)
+             {
+                let tempAssigCounter = 0;  
+                let tempHourCounter = 0;
+                tempAssig.forEach((elem, index, arr) => {
+                      let tempDate = new Date(elem[3]);
+                      let tempMonth = tempDate.getMonth() + 1;
+                      let tempIndex = i + 1;
+                      if(tempIndex == tempMonth)
+                      {
+                         tempAssigCounter += 1; 
+                         tempHourCounter += parseFloat(elem[4])
+                      }
+              
+                })
+                tempCoutedHours[i] = tempHourCounter;
+                tempCountedAmmountOfAssingments[i] = tempAssigCounter;
+             }
+             this.seriesHours[0].data = tempCoutedHours;
+             this.series[0].data = tempCountedAmmountOfAssingments;
+             console.log("serie: ", this.series)
+             
+             let tempProjCounter = 0;
+             for(let i=0; i<12; i++)
+             {
+                tempProjCounter = 0;
+                tempProject.forEach((elem, index, arr) => {
+                    let check = 0;
+                    tempAssig.forEach((elemT, indexT, arrT) => {
+                      let tempDate = new Date(elemT[3]);
+                      let tempMonth = tempDate.getMonth() + 1;
+                      let tempIndex = i + 1;
+                      if(tempIndex == tempMonth)
+                      {
+                         if(elem[0] == elemT[1])
+                         {
+                            check =1;
+                         }
+                      }
+                    })
+                    if(check == 1)
+                    {
+                      tempProjCounter += 1;
+                    }
+                })
+                tempCountedAmmountOfProjects[i] = tempProjCounter;
+             }
+             console.log("projects: ", tempCountedAmmountOfProjects)
+             this.seriesProjects[0].data = tempCountedAmmountOfProjects;
+             //console.log("Counted Hours: ", tempCoutedHours)
+             //console.log("Counted Assing: ", tempCountedAmmountOfAssingments)
+        },
         async showselect(projekt) 
         {
             this.showProjectDetails = 0; 
@@ -402,16 +579,22 @@ export default{
         },
         async countMointh() 
         {
-         for(let i=1 ; i<=12; i++)
+         for(let i=1 ; i<=14; i++)
          {
-            this.chartOptions.xaxis.categories.push(i);
+            this.chartOptionsMonth.xaxis.categories.push(i);
          }
         },
+        async setUP()
+        {
+            await this.getDataForMonthsDiagrams();
+            await this.countMointh();
+            await this.getUsersDataForDiagrams();
+        }
     },
-    mounted()
+    async mounted()
     {
-        this.toastService = useToast();
-        this.countMointh(); 
+        await this.setUP();
+        this.toastService = useToast(); 
     },
     computed: {
         filterWorker(){

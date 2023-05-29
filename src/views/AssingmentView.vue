@@ -119,11 +119,13 @@ export default{
         },
         async Compelte()
         {
+            let currentDate = new Date().toISOString().slice(0, 10);
             let Complete =
             {
                 AsigName: this.selectAssingment,
                 userLogin: this.userName,
-                hours: this.userHours
+                hours: this.userHours,
+                date: currentDate,
             };
             console.log('complete: ', Complete)
             const result = await axios.post("http://127.0.0.1:300/CompleteAssingment", {Complete})
