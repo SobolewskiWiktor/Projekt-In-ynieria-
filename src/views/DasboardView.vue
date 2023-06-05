@@ -133,7 +133,7 @@
                             </div>
                         </div>
                    </div>
-                   <h1>Per User for {{this.tempMonthForDisplay}}</h1>
+                   <h1>Per User in {{this.tempMonthForDisplay}}</h1>
                    <div id="buttonsSelectMonth">
                     <button id="monthButton" @click.prevent="setMonthForDiagrams('Previous')">Previous</button>
                     <button id="monthButton" @click.prevent="setMonthForDiagrams('Current')">Current</button>
