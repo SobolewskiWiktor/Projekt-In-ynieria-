@@ -133,7 +133,12 @@
                             </div>
                         </div>
                    </div>
-                   <h1>Per User</h1>
+                   <h1>Per User for {{this.tempMonthForDisplay}}</h1>
+                   <div id="buttonsSelectMonth">
+                    <button id="monthButton" @click.prevent="setMonthForDiagrams('Previous')">Previous</button>
+                    <button id="monthButton" @click.prevent="setMonthForDiagrams('Current')">Current</button>
+                    <button id="monthButton" @click.prevent="setMonthForDiagrams('Next')">Next</button>
+                   </div>
                    <div id="chartrow">
                         <div id="chart">
                             <div id="chartTitle">Projects</div>
@@ -207,6 +212,9 @@ export default{
        showWorker: 0, 
        filtredWorkers: [],
        serch: '',
+       selectedmonth:'',
+       tempPreviousMonth: 0,
+       tempMonthForDisplay:'',
 
        chartOptionsMonth: {
         chart: {
@@ -265,8 +273,66 @@ export default{
     },
     methods:
     {
-        async getUsersDataForDiagrams()
+        async setMonthForDiagrams(month)
         {
+              this.selectedmonth = month;
+              if(month == 'Current')
+              {
+                let tempDate = new Date();
+                let tempMonth = tempDate.getMonth() + 1;
+                this.tempPreviousMonth = tempMonth;
+              }
+              else if (month == 'Previous')
+              {
+                if(this.tempPreviousMonth == 1)
+                {
+                    this.tempPreviousMonth
+                }
+                else
+                {
+                    this.tempPreviousMonth = this.tempPreviousMonth -1;
+                }
+              }
+              else
+              {
+                if(this.tempPreviousMonth == 12)
+                {
+                    this.tempPreviousMonth
+                }
+                else
+                {
+                this.tempPreviousMonth = this.tempPreviousMonth + 1;
+                }
+              }
+              this.getUsersDataForDiagrams(this.selectedmonth);
+              this.setMonthName(this.tempPreviousMonth - 1);
+        },
+        async setMonthName(month)
+        {
+            var months = [
+                'January',
+                'February',
+                'March',
+                'April',
+                'May',
+                'June',
+                'July',
+                'August',
+                'September',
+                'October',
+                'November',
+                'December'
+                ];
+
+ 
+            let MonthName = months[month];
+            this.tempMonthForDisplay = MonthName;
+        },
+        async getUsersDataForDiagrams(witchMonth)
+        {
+            if(witchMonth == 'Current')
+            {
+                console.log("Pobieram dla obecnego miesiaca")
             let tempUsersNames = []; 
             let users = await axios.get("http://127.0.0.1:300/getUsersList")
             users.data.Users.forEach((elem, index, arr) => {
@@ -336,10 +402,84 @@ export default{
                 this.seriesUsersProjects[0].data = tempUserProjectAmmount;
                 this.seriesUsersAsig[0].data = tempUserAssigAmmount;
                 this.seriesUsersHours[0].data = tempUserHoursAmmount;
+            }
+            else
+            {
+                let tempUsersNames = []; 
+            let users = await axios.get("http://127.0.0.1:300/getUsersList")
+            users.data.Users.forEach((elem, index, arr) => {
+                tempUsersNames[index] = elem[1];
+            })
+            console.log("names: ", tempUsersNames)
+            this.chartOptionsUsers.xaxis.categories.pop()
+            tempUsersNames.forEach((elem, index, arr) => {
+                this.chartOptionsUsers.xaxis.categories.push(elem)
+                console.log("dodaje: ", elem)
+            })
+            console.log("hartOptionsUsers: ",this.chartOptionsUsers.xaxis.categories)
+            console.log("chartOptionsMonth: ",this.chartOptionsMonth.xaxis.categories)
+
+            let tempUserProjectAmmount = []
+            let tempUserAssigAmmount = []
+            let tempUserHoursAmmount = []
+            let tempProjects = await axios.get("http://127.0.0.1:300/getProjectsData");
+            console.log(tempProjects)
+            let resultAssig = await axios.get("http://127.0.0.1:300/getAssingmentData");
+ 
+                users.data.Users.forEach((elem, index, arr) => {
+                    let tempCounterAssig = 0;
+                    let tempCounterHours = 0;
+                    resultAssig.data.Assingments.forEach((elemT, indexT, arrT) => {
+                        let tempDate = new Date(elemT[3]);
+                        let tempMonth = tempDate.getMonth() + 1;
+                        let tempCurDate = new Date();
+                        let tempCurMonth = this.tempPreviousMonth; 
+                        console.log("MIESIAC KUWRA:",tempCurMonth)
+                        if(tempCurMonth == tempMonth)
+                        {
+                            if(elemT[2] == elem[0])
+                            {
+                                tempCounterAssig += 1;
+                                tempCounterHours += parseInt(elemT[4]);
+                            }
+                        }
+                    })
+                    tempUserAssigAmmount[index] = tempCounterAssig;
+                    tempUserHoursAmmount[index] = tempCounterHours;
+                })
+
+                users.data.Users.forEach((elem, index, arr) => {
+                    let tempCounterProject =0; 
+                    tempProjects.data.Projects.forEach((elemT, indexT, arrT) => {
+                        let check =0; 
+                       resultAssig.data.Assingments.forEach((elemF, indexF, arrF) => {
+                            let tempDate = new Date(elemF[3]);
+                            let tempMonth = tempDate.getMonth() + 1;
+                            let tempCurDate = new Date();
+                            let tempCurMonth = tempCurDate.getMonth() + 1; 
+                            if(tempCurMonth == tempMonth)
+                            {
+                                if(elemF[1] == elem[0])
+                                {
+                                    if(elemF[1] == elemT[0])
+                                    {
+                                        check = 1;
+                                    }
+                                }
+                            }
+                       })
+                       tempCounterProject += 1;
+                    })
+                    tempUserProjectAmmount[index] = tempCounterProject;
+                })
+                this.seriesUsersProjects[0].data = tempUserProjectAmmount;
+                this.seriesUsersAsig[0].data = tempUserAssigAmmount;
+                this.seriesUsersHours[0].data = tempUserHoursAmmount
+            }
         },
         async getDataForMonthsDiagrams()
         {
-            console.log("MID | POBIERAM DANE DO WYKRESOW");
+                console.log("MID | POBIERAM DANE DO WYKRESOW");
               let tempProjects = await axios.get("http://127.0.0.1:300/getProjectsData")
               let tempProject = tempProjects.data.Projects;
 
@@ -589,6 +729,7 @@ export default{
             await this.getDataForMonthsDiagrams();
             await this.countMointh();
             await this.getUsersDataForDiagrams();
+            setMonthForDiagrams('Current')
         }
     },
     async mounted()
